@@ -1,0 +1,5 @@
+Credentials cache: API:50E64613-7678-49C4-8BF9-CB739301BD4F
+        Principal: hannkim@42SEOUL.KR
+
+  Issued                Expires             Flags    Principal
+Feb 16 13:23:02 2021  Feb 16 23:23:02 2021  FPRIA  krbtgt/42SEOUL.KR@42SEOUL.KR

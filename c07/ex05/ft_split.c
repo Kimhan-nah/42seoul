@@ -6,87 +6,100 @@
 /*   By: hannkim <hannkim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 02:54:28 by hannkim           #+#    #+#             */
-/*   Updated: 2021/03/12 04:04:26 by hannkim          ###   ########.fr       */
+/*   Updated: 2021/03/19 00:53:32 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-
-int	str_len(char *str)
+char	*ft_strcpy(char *dest, char *src, int end, int start)
 {
-	int len;
+	int i;
 
-	len = 0;
-	while (*str)
+	i = 0;
+	while (start < end)
 	{
-		len++;
-		str++;
+		dest[i] = src[start];
+		start++;
+		i++;
 	}
-	return (len);
+	dest[i] = 0;
+	return (dest);
 }
 
-int	ft_flag(char ch, char *charset)
+int		is_sep(char ch, char *charset)
 {
-	int flag;
-	int	i;
+	int i;
 
-	flag = 0;
 	i = 0;
 	while (charset[i])
 	{
-		if (ch == charset[i])
-		{
-			flag = 1;
-			break;
-		}
+		if (charset[i] == ch)
+			return (1);
 		i++;
 	}
-	return (flag);
+	if (ch == 0)
+		return (1);
+	return (0);
 }
 
-int	count_word(char *str, char *charset)
+void	init_split(char **ret, char *str, char *charset)
 {
-	int	s_idx;
-	int	c_idx;
-	int	count;
-	int	flag;
+	int i;
+	int start;
+	int end;
 
-	s_idx = 0;
-	count = 0;
-	flag = 0;
-	while (str[s_idx])
+	i = 0;
+	start = 0;
+	end = 0;
+	while (str[end])
 	{
-		c_idx = 0;
-		while (charset[c_idx])
+		while (!is_sep(str[end], charset) && str[end])
+			end++;
+		if (end - start > 0)
 		{
-
-			
-			c_idx++;
+			if (!(ret[i] = (char *)malloc(end - start + 1)))
+				return ;
+			ft_strcpy(ret[i], str, end, start);
+			i++;
 		}
-		if (str[s_idx] == charset[c_idx] && st)
-			printf("count:%d/charset:%c/str:%c\n", ++count, charset[c_idx], str[s_idx]);
-		s_idx++;
+		start = end + 1;
+		if (str[end])
+			end++;
+	}
+	ret[i] = 0;
+}
+
+int		word_count(char *str, char *charset)
+{
+	int count;
+	int end;
+	int start;
+
+	count = 0;
+	end = 0;
+	start = 0;
+	while (str[end])
+	{
+		while (!is_sep(str[end], charset) && str[end])
+			end++;
+		if (end - start > 0)
+			count++;
+		start = end + 1;
+		if (str[end])
+			end++;
 	}
 	return (count);
 }
 
-char **ft_split(char *str, char *charset)
+char	**ft_split(char *str, char *charset)
 {
-	char	**p;
+	char	**ret;
 	int		len;
 
-	len = str_len(str);
-	count_word(str, charset);
-}
-
-int main()
-{
-	char *str = "Hello, world. bye";
-	char *charset = ",. /";
-
-	//ft_split(str, charset);
-	count_word(str, charset);
-
-	return (0);
+	len = word_count(str, charset);
+	if (!(ret = (char **)malloc(sizeof(char *) * (len + 1))))
+		return (0);
+	init_split(ret, str, charset);
+	return (ret);
 }

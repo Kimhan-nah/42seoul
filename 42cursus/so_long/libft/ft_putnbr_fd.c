@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 15:29:15 by hannkim           #+#    #+#             */
-/*   Updated: 2021/05/11 19:37:43 by hannkim          ###   ########.fr       */
+/*   Updated: 2021/09/25 17:11:19 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	rec_print(unsigned int nbr, int fd)
 {
-	char c;
+	char	c;
 
 	if (nbr > 0)
 		rec_print(nbr / 10, fd);
@@ -24,7 +24,7 @@ static void	rec_print(unsigned int nbr, int fd)
 	write(fd, &c, 1);
 }
 
-void		ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
 	unsigned int	nbr;
 

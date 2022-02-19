@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:30:04 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/19 15:54:02 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/19 17:31:09 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,16 @@
 
 # include <mlx.h>
 # include <stdlib.h>
-# include "../libft/libft.h"
 # include <fcntl.h>
+# include <unistd.h>
 # include "../gnl/get_next_line.h"
+# include "../libft/libft.h"
 
 # include <stdio.h>
 
+
+extern void	isValidFile(int argc, char *argv[]);
+extern void	parsing(char *file);
+extern void	exitWithErrorMessage(char *message);
 
 #endif

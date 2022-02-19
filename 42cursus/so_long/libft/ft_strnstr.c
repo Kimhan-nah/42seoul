@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 16:58:25 by hannkim           #+#    #+#             */
-/*   Updated: 2021/05/14 00:50:45 by hannkim          ###   ########.fr       */
+/*   Updated: 2021/09/25 17:12:55 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 		res = (char *)(haystack + i);
 		j = 0;
 		while (*(haystack + i + j) == *(needle + j) && *(haystack + i + j)
-				&& i + j < len)
+			&& i + j < len)
 			j++;
 		if (*(needle + j) == 0)
 			return (res);

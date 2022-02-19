@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/12 01:42:05 by hannkim           #+#    #+#             */
-/*   Updated: 2021/09/25 17:09:42 by hannkim          ###   ########.fr       */
+/*   Created: 2022/02/19 17:21:06 by hannkim           #+#    #+#             */
+/*   Updated: 2022/02/19 17:23:38 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/so_long.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new_node)
+void	exitWithErrorMessage(char *message)
 {
-	t_list	*ptr;
-
-	if (!lst || !new_node)
-		return ;
-	if (!(*lst))
-	{
-		*lst = new_node;
-		return ;
-	}
-	ptr = ft_lstlast(*lst);
-	ptr->next = new_node;
+	ft_putendl_fd(message, STDERR_FILENO);
+	exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 00:23:45 by hannkim           #+#    #+#             */
-/*   Updated: 2021/05/14 01:13:49 by hannkim          ###   ########.fr       */
+/*   Updated: 2021/09/25 17:13:11 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_set(char c, char const *set)
 {
-	int idx;
+	int	idx;
 
 	idx = 0;
 	while (set[idx] && set[idx] != c)
@@ -24,7 +24,7 @@ static int	is_set(char c, char const *set)
 	return (0);
 }
 
-char		*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*strtrim;
 	int		idx;

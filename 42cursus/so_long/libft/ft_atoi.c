@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 11:32:04 by hannkim           #+#    #+#             */
-/*   Updated: 2021/05/24 15:06:30 by hannkim          ###   ########.fr       */
+/*   Updated: 2021/09/25 17:08:24 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	is_valid_ch(char ch)
 		return (0);
 }
 
-int			ft_atoi(const char *s)
+int	ft_atoi(const char *s)
 {
 	char				*ptr;
 	unsigned long long	res;

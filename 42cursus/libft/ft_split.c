@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 01:54:55 by hannkim           #+#    #+#             */
-/*   Updated: 2021/05/21 01:04:27 by hannkim          ###   ########.fr       */
+/*   Updated: 2021/09/25 17:12:07 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_free(char **ret)
 {
-	int idx;
+	int	idx;
 
 	idx = 0;
 	while ((*ret)[idx])
@@ -28,7 +28,7 @@ static void	ft_free(char **ret)
 
 static char	*my_strcpy(char *dest, char const *src, int start, int end)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (start < end)
@@ -43,9 +43,9 @@ static char	*my_strcpy(char *dest, char const *src, int start, int end)
 
 static int	init_split(char **ret, char const *s, char c)
 {
-	int i;
-	int start;
-	int end;
+	int	i;
+	int	start;
+	int	end;
 
 	i = 0;
 	start = 0;
@@ -71,9 +71,9 @@ static int	init_split(char **ret, char const *s, char c)
 
 static int	word_count(char const *s, char c)
 {
-	int count;
-	int end;
-	int start;
+	int	count;
+	int	end;
+	int	start;
 
 	count = 0;
 	end = 0;
@@ -91,7 +91,7 @@ static int	word_count(char const *s, char c)
 	return (count);
 }
 
-char		**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**ret;
 	int		len;

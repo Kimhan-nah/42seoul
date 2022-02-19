@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 16:09:30 by hannkim           #+#    #+#             */
-/*   Updated: 2021/05/20 22:13:28 by hannkim          ###   ########.fr       */
+/*   Updated: 2021/09/25 17:13:24 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	size_t idx;
+	size_t	idx;
 
 	idx = ft_strlen(s);
 	c %= 256;

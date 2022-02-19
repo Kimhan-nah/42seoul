@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 03:23:49 by hannkim           #+#    #+#             */
-/*   Updated: 2021/05/15 17:56:25 by hannkim          ###   ########.fr       */
+/*   Updated: 2021/09/25 17:09:21 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	ft_len(int n)
 	return (len);
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char	*str;
 	int		idx;

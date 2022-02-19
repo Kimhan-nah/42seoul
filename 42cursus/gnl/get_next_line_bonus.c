@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 15:17:15 by hannkim           #+#    #+#             */
-/*   Updated: 2021/06/05 22:49:43 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/19 17:16:09 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,28 @@ static int	get_line(char **line, char **backup)
 	return (1);
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
-	static char			*backups[OPEN_MAX];
+	static char			*backup;
 	int					ret;
 
-	if ((fd < 0 || fd > OPEN_MAX) || !line || (BUFFER_SIZE < 1) ||
-			read(fd, backups[fd], 0) == -1)
+	if (fd < 0 || fd > OPEN_MAX || !line || (BUFFER_SIZE < 1) \
+			|| read(fd, backup, 0) == -1)
 		return (-1);
-	while (!ft_strchr(backups[fd], '\n')
-			&& (ret = push_back_using_read(&backups[fd], fd)) > 0)
-		;
+	while (!ft_strchr(backup, '\n'))
+	{
+		ret = push_back_using_read(&backup, fd);
+		if (ret <= 0)
+			break ;
+	}
 	if (ret == -1)
 		return (-1);
-	if (ft_strchr(backups[fd], '\n') != NULL)
-		return (get_line(line, &backups[fd]));
-	*line = ft_strdup(backups[fd]);
+	if (ft_strchr(backup, '\n') != NULL)
+		return (get_line(line, &backup));
+	*line = ft_strdup(backup);
 	if (!*line)
 		return (-1);
-	free(backups[fd]);
-	backups[fd] = 0;
+	free(backup);
+	backup = 0;
 	return (0);
 }

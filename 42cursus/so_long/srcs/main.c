@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 13:52:59 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/19 17:02:18 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/22 11:13:22 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ int main(int argc, char **argv)
 {
 	void	*mlx;
 	void	*win;
+	t_list	map;
+	
 
 	// check file extension and argc
-	isValidFile(argc, argv);
+	is_valid_file(argc, argv);
 
 	//parsing and vailidating
-	parsing(argv[1]);
+	parsing(argv[1], &map);
 
 	mlx = mlx_init();
 	if (!mlx)

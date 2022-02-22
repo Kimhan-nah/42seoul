@@ -6,11 +6,12 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 01:35:37 by hannkim           #+#    #+#             */
-/*   Updated: 2021/05/12 01:40:54 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/22 11:28:55 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../includes/so_long.h"
 
 t_list	*ft_lstlast(t_list *lst)
 {
@@ -18,7 +19,7 @@ t_list	*ft_lstlast(t_list *lst)
 
 	ptr = lst;
 	if (!ptr)
-		return (NULL);
+		exit_with_error_message("Invalid list.");
 	while (ptr->next)
 		ptr = ptr->next;
 	return (ptr);

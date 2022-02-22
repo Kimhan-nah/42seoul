@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:30:04 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/22 11:13:37 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/22 15:13:49 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
-# include "../gnl/get_next_line.h"
-# include "../libft/libft.h"
+# include "../srcs/gnl/get_next_line.h"
+# include "../srcs/libft/libft.h"
 
 # include <stdio.h>
 

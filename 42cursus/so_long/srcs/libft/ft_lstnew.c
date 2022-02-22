@@ -6,12 +6,12 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 21:44:56 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/22 13:27:12 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/22 15:15:23 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "../includes/so_long.h"
+#include "../../includes/so_long.h"
 
 t_list	*ft_lstnew(void *content)
 {

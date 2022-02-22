@@ -6,12 +6,12 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 01:42:05 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/22 13:29:02 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/22 15:15:08 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "../includes/so_long.h"
+#include "../../includes/so_long.h"
 
 void	ft_lstadd_back(t_list **lst, t_list *new_node)
 {

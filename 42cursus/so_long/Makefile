@@ -6,45 +6,36 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/19 12:35:12 by hannkim           #+#    #+#              #
-#    Updated: 2022/02/19 15:34:33 by hannkim          ###   ########.fr        #
+#    Updated: 2022/02/22 15:25:31 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+AR = ar
+ARFLAGS = rcs
 RM = rm -f
 MAKE = make
 SOURCES = srcs/
 
-B_SOURCES = srcs/bonus/
 LIBDIR = libft
 HEADERS = includes
 
 OBJECTS = $(SOURCES:.c=.o)
-B_OBJECTS = $(B_SOURCES:.c=.o)
-
-ifdef IS_BONUS
-	OBJ_FILES = $(B_OBJECTS)
-else
-	OBJ_FILES = $(OBJECTS)
-endif
 
 $(NAME): $(OBJ_FILES)
-	$(MAKE) -C ./libft
-	cp libft/libft.a ./$(NAME)
+	$(MAKE) -C ./srcs/libft
+	cp ./libft/libft.a ./$(NAME)
+	$(AR) $(ARFLAGS) $(NAME) $^
 
 .PHONY	: all
 all		: $(NAME)
 
-.PHONY	: bonus
-bonus	:
-	@$(MAKE) IS_BONUS=1 all
-
 .PHONY	: clean
 clean	:
 	$(MAKE) -C libft clean
-	$(RM) $(OBJECTS) $(B_OBJECTS)
+	$(RM) $(OBJECTS)
 
 .PHONY	: fclean
 fclean	: clean

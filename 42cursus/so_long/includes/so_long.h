@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:30:04 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/19 17:31:09 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/22 11:13:37 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # include <stdio.h>
 
 
-extern void	isValidFile(int argc, char *argv[]);
-extern void	parsing(char *file);
-extern void	exitWithErrorMessage(char *message);
+extern void	is_valid_file(int argc, char *argv[]);
+extern void	parsing(char *file, t_list *map);
+extern void	exit_with_error_message(char *message);
 
 #endif

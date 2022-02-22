@@ -6,7 +6,7 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/06 16:37:29 by hannkim           #+#    #+#              #
-#    Updated: 2021/06/05 22:59:57 by hannkim          ###   ########.fr        #
+#    Updated: 2022/02/22 15:11:11 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,29 +48,21 @@ FUNC = ft_bzero \
 	   ft_putstr_fd \
 	   ft_putendl_fd \
 	   ft_putnbr_fd \
-	   ft_atoi
+	   ft_atoi \
+	   ft_lstnew \
+	   ft_lstadd_front \
+	   ft_lstsize \
+	   ft_lstlast \
+	   ft_lstadd_back \
+	   ft_lstdelone \
+	   ft_lstclear \
+	   ft_lstiter \
+	   ft_lstmap
 
-B_FUNC = ft_lstnew \
-		 ft_lstadd_front \
-		 ft_lstsize \
-		 ft_lstlast \
-		 ft_lstadd_back \
-		 ft_lstdelone \
-		 ft_lstclear \
-		 ft_lstiter \
-		 ft_lstmap
 
 SRCS = $(addsuffix .c, $(FUNC))
-B_SRCS = $(addsuffix .c, $(B_FUNC))
 
 OBJS = $(SRCS:.c=.o)
-B_OBJS = $(B_SRCS:.c=.o)
-
-ifdef IS_BONUS
-	OBJ_FILES = $(OBJS) $(B_OBJS)
-else
-	OBJ_FILES = $(OBJS)
-endif
 
 .PHONY	: all
 all 	: $(NAME)
@@ -78,13 +70,9 @@ all 	: $(NAME)
 $(NAME) : $(OBJ_FILES)
 	$(AR) $(ARFLAGS) $(NAME) $^
 
-.PHONY	: bonus
-bonus 	:
-	make IS_BONUS=1 all
-
 .PHONY	: clean
 clean 	:
-	rm -rf $(OBJS) $(B_OBJS)
+	rm -rf $(OBJS)
 
 .PHONY	: fclean
 fclean	: clean

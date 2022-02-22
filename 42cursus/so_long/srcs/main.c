@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 13:52:59 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/22 11:13:22 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/22 12:09:26 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int main(int argc, char **argv)
 
 	mlx = mlx_init();
 	if (!mlx)
-		return (EXIT_FAILURE);
+		exit_with_error_message("Error\nFail MLX");
 	win = mlx_new_window(mlx, 500, 500, "mlx_test");
 	if (!win)
-		return (EXIT_FAILURE);
+		exit_with_error_message("Error\nFail WIN");
 	//init mlx and mlx_image
 	//draw 
 

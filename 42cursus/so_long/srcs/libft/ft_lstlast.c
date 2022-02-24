@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 01:35:37 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/22 15:15:17 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/24 14:51:44 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*ft_lstlast(t_list *lst)
 
 	ptr = lst;
 	if (!ptr)
-		exit_with_error_message("Invalid list.");
+		exit_with_message("Invalid list.");
 	while (ptr->next)
 		ptr = ptr->next;
 	return (ptr);

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:30:04 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/22 15:13:49 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/24 15:55:42 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,18 @@
 
 # include <stdio.h>
 
+typedef struct s_texture
+{
+	char	*path;
+	int	*texture;
+	int	width;
+	int	height;
+}	t_texture;
 
-extern void	is_valid_file(int argc, char *argv[]);
+
+extern void	check_file(int argc, char *argv[]);
 extern void	parsing(char *file, t_list *map);
-extern void	exit_with_error_message(char *message);
+extern void	exit_with_message(char *message);
+extern int	draw_map(t_list map);
 
 #endif

@@ -1,71 +1,75 @@
-##!/bin/bash
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    test_monitoring.sh                                 :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/02/25 11:21:36 by hannkim           #+#    #+#              #
+#    Updated: 2022/02/25 11:21:40 by hannkim          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
+#!/bin/bash
 
-## 운영체제 및 커널 버전의 아키텍처
-printf " #Architecture:  "
-uname -srvmo
-# -s : kernel name, -r : kernel release, -v : kernel version, -m : machine hardware name, -o : operating system OS
+# 1. The architecture of your operatins system and its kernel version
+echo -n " #Architecture: "
+uname -a
 
-## 물리 프로세서 수 (CPU)
-printf " #CPU physical: "
+# 2. The number of physical processors.
+echo -n " #CPU physical: "
 cat /proc/cpuinfo | grep "physical id" | sort -u | wc -l
-# /proc/cpuinfo : cpu 코어에 대한 정보
-# "physical id" : user당 사용할 수 있는 프로세스 최대 개수 
-# sort -u : 정렬 후 중복행 제거
-# cat /proc/cpuinfo | grep "physical id" | sort | uniq | wc -l
-# nproc --all
 
-
-## 가상 프로세서 수 (vCPU)
-printf " #vCPU: "
+# 3. The number of virtual processors
+echo -n " #vCPU: "
 cat /proc/cpuinfo | grep -c "processor"
-# "processor" : 코어 id 정보
 
-
-## 서버에서 현재 사용 가능한 RAM 및 사용률	?Memory Usage?
-printf " #Memory Usage: "
+# 4. The current available RAM on your server and its utilization rate as a percentage
+echo -n " #Memory Usage: "
 free -m | grep Mem | awk '{printf "%d/%dMB (%.2f%%)\n", $3, $2, $3 / $2 * 100}'
-# free, vmstat, top, /proc/meminfo
 
+# 5. The current available memory on your server and its utilization rate as a percentage
+echo -n " #Disk Usage: "
+df -BM | grep /dev/mapper/ | awk '{sum += $3} END {print sum}' | tr -d '\n'
+echo -n "/"
+df -BM | grep /dev/mapper/ | awk '{sum += $2} END {print sum}' | tr -d '\n'
+echo -n "MB ("
+df -BM | grep /dev/mapper/ | awk '{sum1 += $3 ; sum2 += $2} END {print sum1 / sum2 * 100}' | tr -d '\n'
+echo "%)"
 
-## 서버에서 현재 사용 가능한 메모리 및 사용률	?Disk Usage2?
-printf " #Disk Usage: "
-df -BM -a | grep /dev/mapper/ | awk '{sum+=$3}END{print sum}' | tr -d '\n'
-printf "/"
-df -BG -a | grep /dev/mapper/ | awk '{sum+=$4}END{print sum}' | tr -d '\n'
-printf "Gb ()"
-df -BM -a | grep /dev/mapper/ | awk '{sum1+=$3 ; sum2+=$4}END{printf "%d", sum1 / sum2 * 100}' | tr -d '\n'
-printf "%%)\n"
- # df : Disk Free (디스크 여유 공간)
- # -BM : MByte 단위로 출력
- # -a : 자세하게 출력
- # sum += $n : 모든 레코드의 합
- # END{} : 모든 레코드 처리가 끝나고 프로그램이 종료될 때 실행
+# 6. The current utilization rate of your processors as a percentage
+echo -n " #CPU load: "
+mpstat | grep all | awk '{print 100 - $13}' | tr -d '\n'
+echo "%"
 
+# 7. The date and time of the last reboot
+echo -n " #Last boot: "
+who -b | awk '{printf "%s %s\n", $3, $4}'
 
-## 프로세서의 현재 사용률			?CPU load?
-printf " #CPU load: "
+# 8. Whether LVM is active or not
+echo -n " #LVM use: "
+if [ "$(lsblk | grep lvm | wc -l)" -gt 0 ]; then
+	echo "yes"
+else
+	echo "no"
+fi
 
+# 9. The number of active connections
+echo -n " #Connections TCP : "
+ss | grep -i tcp | wc -l | tr -d '\n'					# grep -i : ignore-case
+echo " ESTABLISHED"
 
-## 마지막 재부팅 날짜 및 시간
-printf " #Last boot: "
+# 10. The number of users using the server
+echo -n " #User log: "
+who | wc -l
 
+# 11. The IPv4 address of your server and its MAC address
+echo -n " #Network: IP "
+/sbin/ifconfig | grep broadcast | awk '{print $2}' | tr -d '\n'		# IPv4 address
+echo -n " ("
+/sbin/ifconfig | grep 'ether ' | awk '{print $2}' | tr -d '\n'		# MAC address
+echo ")"
 
-## LVM 활성 상태 확인
-printf " #LVM use: "
-
-
-## 활성 연결 수 				?Connections TCP?
-printf " #Connections TCP: "
-
-
-## 서버를 사용하는 사용자 수			?User Log?
-printf " #User log: "
-
-
-## 서버의 IPv4 주소와 MAC 주소			?Network?
-printf " #Network: IP "
-
-
-## sudo 프로그램으로 실행된 명령 수		?Sudo?
-printf " #Sudo : "
+# 12. The number of commands executed with the sudo program
+echo -n " #Sudo: "
+cat /var/log/auth.log | grep --text sudo: | grep COMMAND= | wc -l | tr -d '\n'

@@ -6,14 +6,14 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:18:15 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/24 14:24:59 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/25 12:13:34 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int draw_map(t_list map)
-{
-
-	return (0);
-}
+//int draw_map(t_list map)
+//{
+//
+//	return (0);
+//}

@@ -6,13 +6,13 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 13:52:59 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/24 15:34:58 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/25 12:37:54 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	key_check(int key, void *p)
+int	key_check(int key)
 {
 	printf("Key in Win : %d\n", key);
 	if (key == KEY_ESC)
@@ -20,37 +20,40 @@ int	key_check(int key, void *p)
 	return (1);
 }
 
+void	init_solong(t_solong *solong)
+{
+	solong->mlx = mlx_init();
+	if (!solong->mlx)
+		exit_with_message("Error\nFail MLX");
+	solong->win = mlx_new_window(solong->mlx, 500, 500, "mlx_test");
+	if (!solong->win)
+		exit_with_message("Error\nFail WIN");
+	solong->map = (t_list *)ft_calloc(sizeof(t_list), 1);
+	if (!solong->map)
+		exit_with_message("Error\nFail WIN");
+	solong->row = 0;
+	solong->col = 0;
+}
+
 int main(int argc, char **argv)
 {
-	void	*mlx;
-	void	*win;
-	t_list	map;
-	void	*img;
+	t_solong	*solong;
+	t_img	*wall;
 	
-
 	// check file extension and argc
+	solong = (t_solong *)ft_calloc(sizeof(t_solong), 1);
+	if (!solong)
+		exit_with_message("Error\nFail alloc");
 	check_file(argc, argv);
 
 	//parsing and vailidating
-	parsing(argv[1], &map);
+	parsing(argv[1], solong);
 
-	mlx = mlx_init();
-	if (!mlx)
-		exit_with_message("Error\nFail MLX");
-	win = mlx_new_window(mlx, 500, 500, "mlx_test");
-	if (!win)
-		exit_with_message("Error\nFail WIN");
-	//init mlx and mlx_image
-	//draw 
+	img = mlx_new_image(solong->mlx, 200, 200);
+	if (!img)
+		exit_with_message("Error\nimg error");
+	mlx_put_image_to_window(solong->mlx, solong->win, img, 50, 50);		// window에 img 출력
 
-
-
-	// mlx 이미지 생성 : void *mlx_new_image(void *mlx_ptr, int width, int height);
-	img = mlx_new_image(mlx, 200, 200);
-
-	// mlx 이미지 파일 가져오기 : void *mlx_xpm_file_to_image(void *mlx_ptr, char *filename, int *width, int *height);
-	
-	// mlx 이미지 출력 : int mlx_put_image_to_window(void *(mlx_ptr, void *win_ptr, void *img_ptr, int x, int y);
 
 
 	/*
@@ -63,13 +66,9 @@ int main(int argc, char **argv)
 
 	// mlx_hook으로 바꿔보기 : int mlx_hook(void *win_ptr, int x_event, int x_mask, int (*func)(), void *param);
 	//mlx_hook(win, X_KEY_PRESS,)
-	mlx_key_hook(win, key_check, win);
+	mlx_key_hook(solong->win, key_check, solong->win);
 
-	mlx_loop(mlx);
-
-
-
-
+	mlx_loop(solong->mlx);
 
 
 

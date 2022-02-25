@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:30:04 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/24 15:55:42 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/25 12:21:09 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,31 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
-# include "../srcs/gnl/get_next_line.h"
-# include "../srcs/libft/libft.h"
+# include "../lib/gnl/get_next_line.h"
+# include "../lib/libft/libft.h"
 
 # include <stdio.h>
 
-typedef struct s_texture
+typedef struct s_solong
+{
+	void	*mlx;
+	void	*win;
+	t_list	*map;
+	int	row;
+	int	col;
+} t_solong;
+
+typedef struct s_img
 {
 	char	*path;
 	int	*texture;
 	int	width;
 	int	height;
-}	t_texture;
+}	t_img;
 
 
 extern void	check_file(int argc, char *argv[]);
-extern void	parsing(char *file, t_list *map);
+extern void	parsing(char *file, t_solong *solong);
 extern void	exit_with_message(char *message);
 extern int	draw_map(t_list map);
 

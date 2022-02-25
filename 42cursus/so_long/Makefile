@@ -6,41 +6,57 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/19 12:35:12 by hannkim           #+#    #+#              #
-#    Updated: 2022/02/22 15:25:31 by hannkim          ###   ########.fr        #
+#    Updated: 2022/02/25 12:07:49 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = so_long
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-AR = ar
-ARFLAGS = rcs
-RM = rm -f
-MAKE = make
-SOURCES = srcs/
+NAME 		= so_long
+CC 			= gcc
+CFLAGS		= -Wall -Wextra -Werror
+AR			= ar rcs
+RM			= rm -f
 
-LIBDIR = libft
-HEADERS = includes
+LIBFT_DIR 		= ./lib/libft/
+LIBFT_FLAGS		= -L ./$(LIBFT_DIR) -lft
+LIBFT_FILE		= $(LIBFT_DIR)libfft.a
 
-OBJECTS = $(SOURCES:.c=.o)
+GNL_DIR			= ./lib/gnl/
+GNL_FLAGS		= -L ./$(GNL_DIR) -lgnl
+GNL_FILE		= $(LIBFT_DIR)libgnl.a
 
-$(NAME): $(OBJ_FILES)
-	$(MAKE) -C ./srcs/libft
-	cp ./libft/libft.a ./$(NAME)
-	$(AR) $(ARFLAGS) $(NAME) $^
+HEADERS 		= ./includes/
+SRCS_DIR		= ./srcs/
+MLX_DIR			= ./mlx/
+MLX_FLAGS		= -lmlx -framework OpenGL -framework Appkit
+
+SRC				= main.c draw.c error.c check_file.c
+SRCS			= $(addprefix $(SRCS_DIR), $(SRC))
+OBJS 			= $(SRCS:.c=.o)
+
+
+.c.o:
+	$(CC) $(CFLAGS) -I $(HEADERS) -o $@ -c $?
+
+
+$(NAME): $(OBJS)
+	make -C $(LIBFT_DIR)
+	make -C $(GNL_DIR)
+	$(CC) -o $(NAME) $(OBJS) $(GNL_FLAGS) $(LIBFT_FLAGS) -I $(HEADERS) -L $(MLX_DIR) $(MLX_FLAGS)
 
 .PHONY	: all
 all		: $(NAME)
 
 .PHONY	: clean
 clean	:
-	$(MAKE) -C libft clean
-	$(RM) $(OBJECTS)
+	make -C $(LIBFT_DIR) clean
+	make -C $(GNL_DIR) clean
+	$(RM) $(OBJS) a.out a.out.dSYM
 
 .PHONY	: fclean
 fclean	: clean
-	$(MAKE) -C libft fclean
-	$(RM) $(NAME)
+	make -C $(LIBFT_DIR) fclean
+	make -C $(GNL_DIR) fclean
+	$(RM) $(NAME) a.out a.out.dSYM
 
 .PHONY	: cc
 cc 		: $(NAME) $(SOURCES)

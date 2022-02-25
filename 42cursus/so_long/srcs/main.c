@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 13:52:59 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/25 12:37:54 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/25 16:31:24 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,20 @@ int	key_check(int key)
 
 void	init_solong(t_solong *solong)
 {
+//	int width;
+//	int	height;
+
 	solong->mlx = mlx_init();
-	if (!solong->mlx)
-		exit_with_message("Error\nFail MLX");
+
+	
 	solong->win = mlx_new_window(solong->mlx, 500, 500, "mlx_test");
-	if (!solong->win)
-		exit_with_message("Error\nFail WIN");
 	solong->map = (t_list *)ft_calloc(sizeof(t_list), 1);
-	if (!solong->map)
-		exit_with_message("Error\nFail WIN");
+
+	//solong->wall = mlx_xpm_file_to_image(solong->mlx, "../img/asteroid-1.xpm", &width, &height);		// img 포인터로 저장
+
+
+	if (!solong->mlx || !solong->win || !solong->map)
+		exit_with_message("Error\nFail init_solong");
 	solong->row = 0;
 	solong->col = 0;
 }
@@ -38,21 +43,37 @@ void	init_solong(t_solong *solong)
 int main(int argc, char **argv)
 {
 	t_solong	*solong;
-	t_img	*wall;
+	void	*img1;
+	int	width;
+	int	height;
 	
+
 	// check file extension and argc
 	solong = (t_solong *)ft_calloc(sizeof(t_solong), 1);
 	if (!solong)
 		exit_with_message("Error\nFail alloc");
+	init_solong(solong);
 	check_file(argc, argv);
+	
 
 	//parsing and vailidating
 	parsing(argv[1], solong);
 
-	img = mlx_new_image(solong->mlx, 200, 200);
-	if (!img)
-		exit_with_message("Error\nimg error");
-	mlx_put_image_to_window(solong->mlx, solong->win, img, 50, 50);		// window에 img 출력
+
+//	if (open("./img/asteroid-1.xpm", O_RDONLY) == -1)
+//		exit_with_message("open error");
+		
+	img1 = mlx_xpm_file_to_image(solong->mlx, "./img/asteroid-1.xpm", &width, &height);
+	if (!img1)
+		exit_with_message("hello");
+
+
+	mlx_put_image_to_window(solong->mlx, solong->win, img1, 50, 50);		// window에 img 출력
+	//mlx_put_image_to_window(solong->mlx, solong->win, solong->wall, 50, 50);		// window에 img 출력
+//	mlx_put_image_to_window(solong->mlx, solong->win, solong->player, 50, 50);		// window에 img 출력
+//	mlx_put_image_to_window(solong->mlx, solong->win, solong->exit, 50, 50);		// window에 img 출력
+//	mlx_put_image_to_window(solong->mlx, solong->win, solong->bg, 50, 50);		// window에 img 출력
+//	mlx_put_image_to_window(solong->mlx, solong->win, solong->collect, 50, 50);		// window에 img 출력
 
 
 

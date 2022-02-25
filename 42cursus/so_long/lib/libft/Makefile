@@ -6,7 +6,7 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/06 16:37:29 by hannkim           #+#    #+#              #
-#    Updated: 2022/02/22 15:11:11 by hannkim          ###   ########.fr        #
+#    Updated: 2022/02/25 14:32:15 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ OBJS = $(SRCS:.c=.o)
 .PHONY	: all
 all 	: $(NAME)
 
-$(NAME) : $(OBJ_FILES)
+$(NAME) : $(OBJS)
 	$(AR) $(ARFLAGS) $(NAME) $^
 
 .PHONY	: clean

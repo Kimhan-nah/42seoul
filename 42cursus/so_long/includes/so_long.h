@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 15:30:04 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/25 12:21:09 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/25 15:31:54 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ typedef struct s_solong
 {
 	void	*mlx;
 	void	*win;
+
+	void	*wall;
+	void	*player;
+	void	*exit;
+	void	*bg;
+	void	*collect;
+
 	t_list	*map;
 	int	row;
 	int	col;

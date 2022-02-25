@@ -6,13 +6,13 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/19 12:35:12 by hannkim           #+#    #+#              #
-#    Updated: 2022/02/25 12:07:49 by hannkim          ###   ########.fr        #
+#    Updated: 2022/02/25 15:25:01 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= so_long
 CC 			= gcc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -g3 -fsanitize=address -Wall -Wextra -Werror
 AR			= ar rcs
 RM			= rm -f
 
@@ -41,7 +41,8 @@ OBJS 			= $(SRCS:.c=.o)
 $(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
 	make -C $(GNL_DIR)
-	$(CC) -o $(NAME) $(OBJS) $(GNL_FLAGS) $(LIBFT_FLAGS) -I $(HEADERS) -L $(MLX_DIR) $(MLX_FLAGS)
+	make -C $(MLX_DIR)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(GNL_FLAGS) $(LIBFT_FLAGS) -I $(HEADERS) -L $(MLX_DIR) $(MLX_FLAGS)
 
 .PHONY	: all
 all		: $(NAME)
@@ -50,6 +51,7 @@ all		: $(NAME)
 clean	:
 	make -C $(LIBFT_DIR) clean
 	make -C $(GNL_DIR) clean
+	make -C $(MLX_DIR) clean
 	$(RM) $(OBJS) a.out a.out.dSYM
 
 .PHONY	: fclean

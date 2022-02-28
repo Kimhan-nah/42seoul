@@ -6,30 +6,11 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:01:32 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/25 12:34:17 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/02/28 18:29:18 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-void	check_file(int argc, char *argv[])
-{
-	char	*ptr;
-	char	*extension;
-
-	if (argc != 2)
-		exit_with_message("Error\nInvalid Argument");
-
-	ptr = argv[1];
-	extension = ".ber";
-	if (ft_strlen(ptr) < 5)
-		exit_with_message("Error\nInvalid file.");
-	while (*ptr)
-		ptr++;
-	ptr -= 4;
-	if (ft_strncmp(ptr, extension, 4))
-		exit_with_message("Error\nInvalid file");
-}
 
 static void	check_line(char *line, int col, int *flag)
 {
@@ -57,27 +38,63 @@ static void	check_line(char *line, int col, int *flag)
 		count++;
 		line++;
 	}
-	if (*line && count != col)
-		exit_with_message("Error\nInvalid solong. 3");
 }
 
-static void	check_wall(char *line, t_solong *solong)
+static void	check_wall(char *line)
 {
 	while (*line == '1')
-	{
 		line++;
-		if (solong->row == 0)
-			(solong->col)++;
-	}
 	if (*line)
 	{
 		printf("%s\n",line);
 		exit_with_message("Error\nInvalid solong. wall1");
 	}
+}
 
-	if (solong->row != 0 && solong->row * solong->col <= 8)
-		exit_with_message("Error\nInvalid solong. wall2");
-	
+void	check_mapsize(char *file, t_solong *solong)
+{
+	int fd;
+	char *line;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		exit_with_message("Error\nInvalid file.");
+	while (get_next_line(fd, &line) > 0)
+	{
+		if (solong->row == 0)
+			solong->col = ft_strlen(line);
+		else if (ft_strlen(line) != solong->col)
+			exit_with_message("Error\nInvalid map size. It is not square.");
+		solong->row++;
+	}
+	close(fd);
+	if (*line)
+	{
+		if (ft_strlen(line) != solong->col)
+			exit_with_message("Error\nInvalid map size. It is not square.");
+		solong->row++;
+	}
+	if (solong->row < 3 || solong->col < 3 || solong->row * solong->col < 15)
+		exit_with_message("Error\nInvalid map size.");
+}
+
+void	check_arg(int argc, char *argv[])
+{
+	char	*ptr;
+	char	*extension;
+
+	if (argc != 2)
+		exit_with_message("Error\nInvalid Argument");
+
+	ptr = argv[1];
+	extension = ".ber";
+	if (ft_strlen(ptr) < 5)
+		exit_with_message("Error\nInvalid file.");
+	while (*ptr)
+		ptr++;
+	ptr -= 4;
+	if (ft_strncmp(ptr, extension, 4))
+		exit_with_message("Error\nInvalid file");
 }
 
 void	parsing(char *file, t_solong *solong)
@@ -95,32 +112,13 @@ void	parsing(char *file, t_solong *solong)
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (solong->row == 0)
-			check_wall(line, solong);
+			check_wall(line);
 		else
 			check_line(line, solong->col, flag);
-		ft_lstadd_back(&(solong->map), ft_lstnew(line));
-		solong->row++;
+		//ft_lstadd_back(&(solong->map), ft_lstnew(line));
 	}
 	close(fd);
 	if (solong->row < 2|| !flag[0] || !flag[1] || !flag[2])
 		exit_with_message("Error\nInvalid solong. 4");
-	if (*line)
-		check_wall(line, solong);
-	else
-		check_wall(ft_lstlast(solong->map)->content, solong);
+	check_wall((solong->map)[solong->row - 1]);
 }
-
-//int main(int argc, char **argv)
-//{
-//	t_list	*solong;
-//	
-//	solong = 0;
-//	// check file extension and argc
-//	is_valid_file(argc, argv);
-//
-//	//parsing and vailidating
-//	parsing(argv[1], solong);
-//
-//	return (EXIT_SUCCESS);
-//	
-//}

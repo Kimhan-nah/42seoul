@@ -6,7 +6,7 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/19 12:35:12 by hannkim           #+#    #+#              #
-#    Updated: 2022/02/25 15:25:01 by hannkim          ###   ########.fr        #
+#    Updated: 2022/02/28 16:51:27 by hannah           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRCS_DIR		= ./srcs/
 MLX_DIR			= ./mlx/
 MLX_FLAGS		= -lmlx -framework OpenGL -framework Appkit
 
-SRC				= main.c draw.c error.c check_file.c
+SRC				= main.c draw.c error.c check_file.c initialization.c
 SRCS			= $(addprefix $(SRCS_DIR), $(SRC))
 OBJS 			= $(SRCS:.c=.o)
 

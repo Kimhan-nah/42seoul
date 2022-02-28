@@ -1,41 +1,14 @@
 #include "../includes/so_long.h"
 
-int	key_check(int key, void *p)
+int main()
 {
-	printf("Key in Win : %d\n", key);
-	if (key == KEY_ESC)
-		exit(EXIT_SUCCESS);
-	return (1);
-}
+	t_solong *solong = (t_solong *)ft_calloc(sizeof(t_solong), 1);
 
-int main(int argc, char **argv)
-{
-	void	*mlx;
-	void	*win;
-	void	*img;
-	int	width;
-	int	height;
-	
-	mlx = mlx_init();
-	if (!mlx)
-		exit(EXIT_FAILURE);
-	win = mlx_new_window(mlx, 500, 500, "mlx_test");
-	if (!win)
-		exit(EXIT_FAILURE);
+	printf("%d\n", solong->row);
+	printf("%d\n", solong->col);
+	printf("%d\n", solong->flag[0]);
+	printf("%d\n", solong->flag[1]);
+	printf("%d\n", solong->flag[2]);
 
-	img = mlx_xpm_file_to_image(mlx, "../img/asteroid-1.xpm", &width, &height);		// img 포인터로 저장
-	if (!img)
-		exit_with_message("Error\nimg error");
-	mlx_put_image_to_window(mlx, win, img, 50, 50);		// window에 img 출력
-	mlx_put_image_to_window(mlx, win, img, 100, 100);		// window에 img 출력
-
-	
-
-
-	mlx_key_hook(win, key_check, win);
-
-	mlx_loop(mlx);
-
-
-	return (EXIT_SUCCESS);
+	return 0;
 }

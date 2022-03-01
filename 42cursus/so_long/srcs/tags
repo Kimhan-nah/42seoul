@@ -1,0 +1,20 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+check_arg	check_file.c	/^void	check_arg(int argc, char *argv[])$/;"	f
+check_line	check_file.c	/^static void	check_line(char *line, int col, int *flag)$/;"	f	file:
+check_mapsize	check_file.c	/^void	check_mapsize(char *file, t_solong *solong)$/;"	f
+check_wall	check_file.c	/^static void	check_wall(char *line)$/;"	f	file:
+exit_with_message	error.c	/^void	exit_with_message(char *message)$/;"	f
+init_map	initialization.c	/^void	init_map(char *file, t_solong *solong)$/;"	f
+init_solong	initialization.c	/^void	init_solong(t_solong *solong)$/;"	f
+init_win	initialization.c	/^void	init_win(t_solong *solong)$/;"	f
+key_check	main.c	/^int	key_check(int key)$/;"	f
+main	main.c	/^int main(int argc, char **argv)$/;"	f
+main	test.c	/^int main()$/;"	f
+parsing	check_file.c	/^void	parsing(char *file, t_solong *solong)$/;"	f
+put_img	draw.c	/^static int	put_img(t_solong *solong, int x, int y)$/;"	f	file:
+rendering	draw.c	/^int	rendering(t_solong *solong)$/;"	f

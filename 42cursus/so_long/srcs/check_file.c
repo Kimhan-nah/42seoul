@@ -6,48 +6,56 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:01:32 by hannkim           #+#    #+#             */
-/*   Updated: 2022/02/28 18:29:18 by hannah           ###   ########.fr       */
+/*   Updated: 2022/03/01 21:58:18 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-static void	check_line(char *line, int col, int *flag)
+static void	check_line(char *line, t_solong *solong, unsigned int i)
 {
-	int count;
 	char	*component;
 	char	ptr;
+	unsigned int j;
 
-	count = 0;
 	component = "01CEP";
-//	if (!line)
-//		exit_with_message("Invalid solong.");
+	j = 0;
 	while (*line)
 	{
-		if (((count == 0 || count  == col - 1) && *line != '1'))
+		if (((j == 0 || j + 1 == solong->col) && *line != '1'))
 			exit_with_message("Error\nInvalid solong. 1");
 		ptr = *ft_strchr(component, *line);
 		if (!ptr)
 			exit_with_message("Error\nInvalid solong. 2");
-		else if (ptr == 'C')
-			flag[0]++;			
-		else if (ptr == 'E')
-			flag[1]++;			
-		else if (ptr == 'P')
-			flag[2]++;			
-		count++;
+		else if (ptr == 'C')		// collect
+			(solong->flag)[0]++;			
+		else if (ptr == 'E')		// exit
+			(solong->flag)[1]++;			
+		else if (ptr == 'P')		// player
+		{
+			(solong->flag)[2]++;
+			solong->player.x = i;
+			solong->player.y = j;
+		}
+		j++;
 		line++;
 	}
 }
 
-static void	check_wall(char *line)
+static void	check_wall(char **map, unsigned int row, unsigned int col)
 {
-	while (*line == '1')
-		line++;
-	if (*line)
+	char	*top_wall;
+	char	*bottom_wall;
+	unsigned int i;
+
+	top_wall = map[0];
+	bottom_wall = map[row - 1];
+	i = 0;
+	while (i < col)
 	{
-		printf("%s\n",line);
-		exit_with_message("Error\nInvalid solong. wall1");
+		if (top_wall[i] != '1' || bottom_wall[i] != '1')
+			exit_with_message("Error\nInvalid map wall");
+		i++;
 	}
 }
 
@@ -61,21 +69,24 @@ void	check_mapsize(char *file, t_solong *solong)
 		exit_with_message("Error\nInvalid file.");
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (solong->row == 0)
+		solong->row++;
+		if (solong->row == 1)
 			solong->col = ft_strlen(line);
 		else if (ft_strlen(line) != solong->col)
-			exit_with_message("Error\nInvalid map size. It is not square.");
-		solong->row++;
+			exit_with_message("Error\nInvalid map size. It is not square 1");
+		free(line);
 	}
 	close(fd);
 	if (*line)
 	{
-		if (ft_strlen(line) != solong->col)
-			exit_with_message("Error\nInvalid map size. It is not square.");
 		solong->row++;
+		if (ft_strlen(line) != solong->col)
+			exit_with_message("Error\nInvalid map size. It is not square 2.");
+//		free(line);
 	}
 	if (solong->row < 3 || solong->col < 3 || solong->row * solong->col < 15)
 		exit_with_message("Error\nInvalid map size.");
+	free(line);
 }
 
 void	check_arg(int argc, char *argv[])
@@ -100,25 +111,23 @@ void	check_arg(int argc, char *argv[])
 void	parsing(char *file, t_solong *solong)
 {
 	int fd;
+	unsigned int	i;
 	char *line;
-	int	flag[3];
 
 	fd = open(file, O_RDONLY);
+	i = 0;
 	if (fd < 0)
 		exit_with_message("Error\nInvalid file.");
-	flag[0] = 0;
-	flag[1] = 0;
-	flag[2] = 0;
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (solong->row == 0)
-			check_wall(line);
-		else
-			check_line(line, solong->col, flag);
-		//ft_lstadd_back(&(solong->map), ft_lstnew(line));
+		check_line(line, solong, i);
+		solong->map[i] = line;
+		i++;
 	}
 	close(fd);
-	if (solong->row < 2|| !flag[0] || !flag[1] || !flag[2])
+	if (!(solong->flag)[0] || !(solong->flag)[1] || (solong->flag)[2] != 1)
 		exit_with_message("Error\nInvalid solong. 4");
-	check_wall((solong->map)[solong->row - 1]);
+	if (*line)
+		solong->map[i] = line;
+	check_wall(solong->map, solong->row, solong->col);
 }

@@ -6,13 +6,17 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/19 12:35:12 by hannkim           #+#    #+#              #
-#    Updated: 2022/02/28 16:51:27 by hannah           ###   ########.fr        #
+#    Updated: 2022/03/01 16:52:03 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= so_long
 CC 			= gcc
-CFLAGS		= -g3 -fsanitize=address -Wall -Wextra -Werror
+ifdef DEBUG
+CFLAGS		= -g3 -fsanitize=address
+else
+CFLAGS		= -Wall -Wextra -Werror
+endif
 AR			= ar rcs
 RM			= rm -f
 
@@ -29,7 +33,7 @@ SRCS_DIR		= ./srcs/
 MLX_DIR			= ./mlx/
 MLX_FLAGS		= -lmlx -framework OpenGL -framework Appkit
 
-SRC				= main.c draw.c error.c check_file.c initialization.c
+SRC				= main.c draw.c error.c check_file.c initialization.c event.c
 SRCS			= $(addprefix $(SRCS_DIR), $(SRC))
 OBJS 			= $(SRCS:.c=.o)
 
@@ -65,3 +69,7 @@ cc 		: $(NAME) $(SOURCES)
 
 .PHONY	: re
 re		: fclean all
+
+.PHONY	: debug
+debug	:
+	make DEBUG=1 all

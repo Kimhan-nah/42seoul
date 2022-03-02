@@ -6,17 +6,27 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:18:15 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/01 21:39:21 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/03 08:23:09 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-// mlx_loop_hook에서 imgage draw 함수포인터로 사용할 함수
+static void	put_img(t_solong *solong, void *img, unsigned int x, unsigned int y)
+{
+	if (img)
+		mlx_put_image_to_window(solong->mlx, solong->win, img, \
+				x * IMG, y * IMG);
+	if (solong->player.x == x && solong->player.y == y)
+		mlx_put_image_to_window(solong->mlx, solong->win, solong->img_player, \
+				x * IMG, y * IMG);
+}
+
 int	rendering(t_solong *solong)
 {
-	unsigned int x;
-	unsigned int y;
+	unsigned int	x;
+	unsigned int	y;
+	void			*img;
 
 	y = 0;
 	while (y < solong->row)
@@ -24,20 +34,19 @@ int	rendering(t_solong *solong)
 		x = 0;
 		while (x < solong->col)
 		{
-			mlx_put_image_to_window(solong->mlx, solong->win, solong->img_bg, x * IMG, y * IMG);
-			if (solong->map[y][x] == '1')		// wall
-				mlx_put_image_to_window(solong->mlx, solong->win, solong->img_wall, x * IMG, y * IMG);
+			img = 0;
+			mlx_put_image_to_window(solong->mlx, solong->win, \
+					solong->img_bg, x * IMG, y * IMG);
+			if (solong->map[y][x] == '1')
+				img = solong->img_wall;
 			else if (solong->map[y][x] == 'E')
-				mlx_put_image_to_window(solong->mlx, solong->win, solong->img_exit, x * IMG, y * IMG);
+				img = solong->img_exit;
 			else if (solong->map[y][x] == 'C')
-				mlx_put_image_to_window(solong->mlx, solong->win, solong->img_collect, x * IMG, y * IMG);
-
-			mlx_put_image_to_window(solong->mlx, solong->win, solong->img_player, solong->player.y * IMG, solong->player.x * IMG);
-
+				img = solong->img_collect;
+			put_img(solong, img, x, y);
 			x++;
 		}
 		y++;
 	}
-
 	return (1);
 }

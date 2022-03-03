@@ -6,27 +6,28 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/19 12:35:12 by hannkim           #+#    #+#              #
-#    Updated: 2022/03/01 16:52:03 by hannkim          ###   ########.fr        #
+#    Updated: 2022/03/03 14:21:40 by hannah           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= so_long
 CC 			= gcc
 ifdef DEBUG
-CFLAGS		= -g3 -fsanitize=address
+	CFLAGS	= -g3
+#CFLAGS		= -g3 -fsanitize=address
 else
-CFLAGS		= -Wall -Wextra -Werror
+	CFLAGS		= -Wall -Wextra -Werror
 endif
 AR			= ar rcs
 RM			= rm -f
 
 LIBFT_DIR 		= ./lib/libft/
 LIBFT_FLAGS		= -L ./$(LIBFT_DIR) -lft
-LIBFT_FILE		= $(LIBFT_DIR)libfft.a
+#LIBFT_FILE		= $(LIBFT_DIR)libft.a
 
 GNL_DIR			= ./lib/gnl/
 GNL_FLAGS		= -L ./$(GNL_DIR) -lgnl
-GNL_FILE		= $(LIBFT_DIR)libgnl.a
+#GNL_FILE		= $(LIBFT_DIR)libgnl.a
 
 HEADERS 		= ./includes/
 SRCS_DIR		= ./srcs/

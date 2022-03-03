@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:18:15 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/03 08:23:09 by hannah           ###   ########.fr       */
+/*   Updated: 2022/03/03 08:53:38 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	put_img(t_solong *solong, void *img, unsigned int x, unsigned int y)
 	if (img)
 		mlx_put_image_to_window(solong->mlx, solong->win, img, \
 				x * IMG, y * IMG);
-	if (solong->player.x == x && solong->player.y == y)
+	if (solong->player.x == y && solong->player.y == x)
 		mlx_put_image_to_window(solong->mlx, solong->win, solong->img_player, \
 				x * IMG, y * IMG);
 }

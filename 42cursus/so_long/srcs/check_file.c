@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:01:32 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/03 14:15:16 by hannah           ###   ########.fr       */
+/*   Updated: 2022/03/05 12:36:56 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,23 +92,16 @@ void	parsing(char *file, t_solong *solong)
 	unsigned int	i;
 	char			*line;
 
-	int tmp = 0;
-
 	fd = open(file, O_RDONLY);
 	i = 0;
 	if (fd < 0)
 		exit_with_message("Error\nInvalid file.");
-	while ((tmp = get_next_line(fd, &line)) > 0)
+	while (get_next_line(fd, &line) > 0)
 	{
 		check_line(line, solong, i);
 		solong->map[i] = line;
 		i++;
 	}
-	printf("tmp : %d\n", tmp);
-	printf("line : %s\n", line);
-	printf("line : %d\n", *line);
-
-
 	close(fd);
 	if (!(solong->flag)[0] || !(solong->flag)[1] || (solong->flag)[2] != 1)
 		exit_with_message("Error\nInvalid solong. 4");

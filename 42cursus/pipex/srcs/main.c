@@ -6,35 +6,53 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 18:30:46 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/07 13:07:46 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/07 18:30:24 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	parsing(int argc, char *argv[], char **envp, t_args *args)
+void	exit_msg(char *msg)
 {
-	args->argc = argc;
-	args->envp = envp;
-	args->infile = argv[1];
-	args->outfile = argv[4];
+	printf("Error\n");
+	printf("%s\n", msg);
+	exit(EXIT_FAILURE);
+}
 
-	args->cmds[0] = ft_split(argv[2], ' ');
-	args->cmds[1] = ft_split(argv[3], ' ');
-	if (!args->cmds[0] || !args->cmds[1])
-		exit(EXIT_FAILURE);
+void	parent_process(char *argv[], char **envp)
+{
+}
+
+void	child_process()
+{
 }
 
 int	main(int argc, char *argv[], char **envp)
 {
-	t_args	*args;
+	int		fd[2];
+	pid_t	pid;
+	t_args *args;
 
-	if (argc != 5)
+	args = (t_args *)ft_calloc(1, sizeof(t_args));
+
+	if (argc != 5 || !envp)
 		exit(EXIT_FAILURE);
-	args = (t_args	*)ft_calloc(1, sizeof(t_args));
-	parsing(argc, argv, envp, args);
 
-	printf("%s\n", args->cmds[0][0]);
+	if (pipe(fd) == -1)			// pipe 생성
+		exit(EXIT_FAILURE);
+
+	parsing(argv, envp, args);
+	pid = fork();				// 자식 프로세스 생성	
+	if (pid == 0)				// 자식 프로세스일 경우
+		child_process();
+	else if (pid > 0)			// 부모 프로세스일 경우
+		parent_process(argv, envp);
+	else						// error
+	{
+		printf("fork pid error\n");
+		exit(EXIT_FAILURE);
+	}
 
 	return (0);
 }
+

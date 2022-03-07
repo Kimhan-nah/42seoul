@@ -6,7 +6,7 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/19 12:35:12 by hannkim           #+#    #+#              #
-#    Updated: 2022/03/05 12:57:42 by hannkim          ###   ########.fr        #
+#    Updated: 2022/03/07 13:09:24 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,6 @@ RM			= rm -f
 LIBFT_DIR 		= ./lib/libft/
 LIBFT_FLAGS		= -L ./$(LIBFT_DIR) -lft
 
-GNL_DIR			= ./lib/gnl/
-GNL_FLAGS		= -L ./$(GNL_DIR) -lgnl
-
 HEADERS 		= ./includes/
 SRCS_DIR		= ./srcs/
 
@@ -40,8 +37,7 @@ OBJS 			= $(SRCS:.c=.o)
 
 $(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
-	make -C $(GNL_DIR)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(GNL_FLAGS) $(LIBFT_FLAGS) -I $(HEADERS) -L 
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT_FLAGS) -I $(HEADERS)
 
 .PHONY	: all
 all		: $(NAME)
@@ -49,13 +45,11 @@ all		: $(NAME)
 .PHONY	: clean
 clean	:
 	make -C $(LIBFT_DIR) clean
-	make -C $(GNL_DIR) clean
 	$(RM) $(OBJS) a.out a.out.dSYM
 
 .PHONY	: fclean
 fclean	: clean
 	make -C $(LIBFT_DIR) fclean
-	make -C $(GNL_DIR) fclean
 	$(RM) $(NAME) a.out a.out.dSYM
 
 .PHONY	: cc

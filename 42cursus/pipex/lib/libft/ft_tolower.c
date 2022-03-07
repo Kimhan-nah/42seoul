@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/05 18:30:46 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/05 19:21:13 by hannkim          ###   ########.fr       */
+/*   Created: 2021/05/06 13:22:00 by hannkim           #+#    #+#             */
+/*   Updated: 2021/05/14 00:51:59 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-
-int	main(int argc, char *argv[], char **envp)
+int	ft_tolower(int c)
 {
-
-	printf("before pid : %d\n", getpid());
-	execve("/bin/sleep", argv, envp);
-	printf("after  pid : %d\n", getpid());
-
-	return (0);
+	if (c >= 'A' && c <= 'Z')
+		return (c + 32);
+	return (c);
 }

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 09:30:01 by hannkim           #+#    #+#             */
-/*   Updated: 2021/09/25 17:14:30 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/07 18:01:26 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include "../../includes/pipex.h"
 
 typedef struct s_list
 {

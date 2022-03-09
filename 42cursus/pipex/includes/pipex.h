@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 12:09:29 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/07 18:20:42 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/09 11:05:23 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include "../lib/libft/libft.h"
 
 # include <stdio.h>
+
+//typedef struct s_cmds
+//{
+//	char			**cmd;
+//	struct s_cmds	*next;
+//}	t_cmds;
 
 typedef struct s_args
 {

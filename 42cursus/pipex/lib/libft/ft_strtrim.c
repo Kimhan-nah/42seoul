@@ -6,11 +6,12 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 00:23:45 by hannkim           #+#    #+#             */
-/*   Updated: 2021/09/25 17:13:11 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/09 11:48:26 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../../includes/pipex.h"
 
 static int	is_set(char c, char const *set)
 {
@@ -34,7 +35,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	idx = 0;
 	start = 0;
 	if (!s1)
-		return (NULL);
+		exit_msg("ft_strtrim");
 	end = ft_strlen(s1) - 1;
 	while (is_set(s1[start], set) && s1[start])
 		start++;
@@ -42,7 +43,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		end--;
 	strtrim = (char *)ft_calloc(end - start + 2, sizeof(char));
 	if (!strtrim)
-		return (NULL);
+		exit_msg("ft_strtrim");
 	while (start <= end)
 		strtrim[idx++] = s1[start++];
 	return (strtrim);

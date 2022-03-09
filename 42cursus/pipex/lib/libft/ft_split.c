@@ -6,25 +6,12 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 01:54:55 by hannkim           #+#    #+#             */
-/*   Updated: 2021/09/25 17:12:07 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/09 14:09:52 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static void	ft_free(char **ret)
-{
-	int	idx;
-
-	idx = 0;
-	while ((*ret)[idx])
-	{
-		free(ret[idx]);
-		ret[idx] = 0;
-		idx++;
-	}
-	free(ret);
-}
+#include "../../includes/pipex.h"
 
 static char	*my_strcpy(char *dest, char const *src, int start, int end)
 {
@@ -57,8 +44,6 @@ static int	init_split(char **ret, char const *s, char c)
 		if (end - start > 0)
 		{
 			ret[i] = (char *)ft_calloc(end - start + 1, sizeof(char));
-			if (!ret[i])
-				return (1);
 			my_strcpy(ret[i], s, start, end);
 			i++;
 		}
@@ -100,12 +85,6 @@ char	**ft_split(char const *s, char c)
 		return (0);
 	len = word_count(s, c);
 	ret = (char **)ft_calloc(len + 1, sizeof(char *));
-	if (!ret)
-		return (NULL);
-	if (init_split(ret, s, c) == 1)
-	{
-		ft_free(ret);
-		ret = 0;
-	}
+	init_split(ret, s, c);
 	return (ret);
 }

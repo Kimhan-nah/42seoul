@@ -6,11 +6,12 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:13:41 by hannkim           #+#    #+#             */
-/*   Updated: 2021/05/14 01:11:45 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/09 14:09:32 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../../includes/pipex.h"
 
 char	*ft_strdup(const char *s1)
 {
@@ -21,8 +22,6 @@ char	*ft_strdup(const char *s1)
 	size = ft_strlen(s1);
 	idx = 0;
 	ret = (char *)ft_calloc(size + 1, sizeof(char));
-	if (!ret)
-		return (NULL);
 	while (idx < size)
 	{
 		ret[idx] = s1[idx];

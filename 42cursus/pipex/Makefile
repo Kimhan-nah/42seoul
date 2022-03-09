@@ -6,7 +6,7 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/19 12:35:12 by hannkim           #+#    #+#              #
-#    Updated: 2022/03/07 13:09:24 by hannkim          ###   ########.fr        #
+#    Updated: 2022/03/09 14:47:39 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LIBFT_FLAGS		= -L ./$(LIBFT_DIR) -lft
 HEADERS 		= ./includes/
 SRCS_DIR		= ./srcs/
 
-SRC				= main.c
+SRC				= main.c parsing.c
 SRCS			= $(addprefix $(SRCS_DIR), $(SRC))
 OBJS 			= $(SRCS:.c=.o)
 

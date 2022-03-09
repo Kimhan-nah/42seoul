@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 18:30:46 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/07 18:30:24 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/09 15:33:29 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	exit_msg(char *msg)
 
 void	parent_process(char *argv[], char **envp)
 {
+	while (access())
+	{
+	}
 }
 
 void	child_process()
@@ -42,10 +45,16 @@ int	main(int argc, char *argv[], char **envp)
 		exit(EXIT_FAILURE);
 
 	parsing(argv, envp, args);
+	int i = 0;
+	while (args->cmds[0][i]){
+		printf("args->cmd[0][%d] : %s\n", i, args->cmds[0][i]);
+		i++;
+	}
+	pid = 0;
 	pid = fork();				// 자식 프로세스 생성	
-	if (pid == 0)				// 자식 프로세스일 경우
+	if (pid == -1)				// 자식 프로세스일 경우
 		child_process();
-	else if (pid > 0)			// 부모 프로세스일 경우
+	else if (pid > -1)			// 부모 프로세스일 경우
 		parent_process(argv, envp);
 	else						// error
 	{

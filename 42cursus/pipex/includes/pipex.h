@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 12:09:29 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/09 19:04:40 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/09 19:59:21 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 typedef struct s_args
 {
 	char	**envp;
-	char	**argv;
 
 	char	*infile;
 	char	*outfile;

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 12:09:29 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/09 11:05:23 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/09 19:04:40 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,21 @@
 
 # include <stdio.h>
 
-//typedef struct s_cmds
-//{
-//	char			**cmd;
-//	struct s_cmds	*next;
-//}	t_cmds;
-
 typedef struct s_args
 {
+	char	**envp;
+	char	**argv;
+
 	char	*infile;
 	char	*outfile;
 	char	**cmds[2];		// cmds[2][*][*]
-	char	**envp;
+
+	char	**path;
 
 }	t_args;
 
 void	exit_msg(char *msg);
 void	parsing(char *argv[], char **envp, t_args *args);
+char	**cmd_parsing(char *argv);
 
 #endif

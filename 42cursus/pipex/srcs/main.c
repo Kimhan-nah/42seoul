@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 18:30:46 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/09 19:05:49 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/09 20:10:47 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,15 @@ void	child_process1(t_args *args)
 	int		i;
 
 	i = 0;
+
+//	if (dup2(blah, blah) == -1)
+//	{
+//		exit_msg(strerror(errno));
+//	}
+//	dup2(pipe, STDIN_FILENO);
+
 	filename = ft_strjoin(args->path[i], args->cmds[0][0]);
+	// 끝까지 못찾았을 경우 추가하기
 	while (access(filename, X_OK) != 0)
 	{
 		i++;
@@ -34,7 +42,7 @@ void	child_process1(t_args *args)
 		filename = ft_strjoin(args->path[i], args->cmds[0][0]);
 		free(tmp);
 	}
-	execve(filename, args->argv, args->envp);
+	execve(filename, args->cmds[0], args->envp);
 }
 
 void	child_process2(t_args *args)
@@ -52,7 +60,7 @@ void	child_process2(t_args *args)
 		filename = ft_strjoin(args->path[i], args->cmds[1][0]);
 		free(tmp);
 	}
-	execve(filename, args->argv, args->envp);
+	execve(filename, args->cmds[1], args->envp);
 
 }
 

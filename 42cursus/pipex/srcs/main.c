@@ -6,9 +6,14 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 18:30:46 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/09 20:10:47 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/10 19:41:36 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+ * dup2, execve, exit_msg(strerror()) 노션 확인
+ *
+ */
 
 #include "../includes/pipex.h"
 

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 18:32:02 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/09 18:33:14 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/12 22:16:16 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ static char	*strcut(char *start, char *end)
 	int		i;
 
 	i = 0;
-	if (*end == '\'' || *end == '\"')
-		end--;
-	len = end - start + 1;
+	len = end - start;			// 
 	ret = (char *)ft_calloc(len + 1, sizeof(char));
 	while (i < len)
 	{

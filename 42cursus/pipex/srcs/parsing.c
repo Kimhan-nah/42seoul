@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 18:19:49 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/09 19:05:17 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/12 22:03:54 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ static void	envp_parsing(t_args *args)
 
 void	parsing(char *argv[], char **envp, t_args *args)
 {
+	// infile, outfile no such file or directory 처리하기
 	args->envp = envp;
-	args->argv = argv;
+	args->pipe_fd[READ] = 0;
+	args->pipe_fd[WRITE] = 0;
 
 	args->infile = argv[1];
 	args->outfile = argv[4];

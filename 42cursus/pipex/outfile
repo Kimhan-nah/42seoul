@@ -1,0 +1,10 @@
+total 112
+drwxr-xr-x   9 hannkim  2021_seoul    306 Mar 12 22:16 .
+drwxr-xr-x  11 hannkim  2021_seoul    374 Mar  5 12:56 ..
+-rw-r--r--   1 hannkim  2021_seoul   1720 Mar 12 19:38 Makefile
+drwxr-xr-x   4 hannkim  2021_seoul    136 Mar 12 21:51 includes
+-rw-r--r--   1 hannkim  2021_seoul      0 Mar  7 12:17 infile
+drwxr-xr-x   3 hannkim  2021_seoul    102 Mar  7 12:06 lib
+-rw-r--r--   1 hannkim  2021_seoul      0 Mar 12 22:16 outfile
+-rwxr-xr-x   1 hannkim  2021_seoul  50864 Mar 12 22:16 pipex
+drwxr-xr-x  16 hannkim  2021_seoul    544 Mar 12 22:16 srcs

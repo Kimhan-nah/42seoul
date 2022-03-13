@@ -6,13 +6,29 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 18:19:49 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/12 22:03:54 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/13 13:58:08 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static void	envp_parsing(t_args *args)
+static char	**cmd_parsing(char *argv)
+{
+	char	*str;
+	char	**ret;
+	int		len;
+	int		i;
+
+	str = ft_strtrim(argv, " ");
+	len = cmd_count(str);
+	i = 0;
+	ret = (char **)ft_calloc(len + 1, sizeof(char *));
+	cmd_split(ret, str);
+	free(str);
+	return (ret);
+}
+
+static void	path_parsing(t_args *args)
 {
 	int		i;
 	char	*path;
@@ -33,16 +49,12 @@ static void	envp_parsing(t_args *args)
 
 void	parsing(char *argv[], char **envp, t_args *args)
 {
-	// infile, outfile no such file or directory 처리하기
 	args->envp = envp;
 	args->pipe_fd[READ] = 0;
 	args->pipe_fd[WRITE] = 0;
-
 	args->infile = argv[1];
 	args->outfile = argv[4];
 	args->cmds[0] = cmd_parsing(argv[2]);
 	args->cmds[1] = cmd_parsing(argv[3]);
-	
-	envp_parsing(args);
+	path_parsing(args);
 }
-

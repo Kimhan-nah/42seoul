@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 01:54:55 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/09 14:09:52 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/13 11:54:07 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*my_strcpy(char *dest, char const *src, int start, int end)
 		start++;
 		i++;
 	}
-	dest[i] = 0;
+	dest[i] = '/';
 	return (dest);
 }
 
@@ -43,7 +43,7 @@ static int	init_split(char **ret, char const *s, char c)
 			end++;
 		if (end - start > 0)
 		{
-			ret[i] = (char *)ft_calloc(end - start + 1, sizeof(char));
+			ret[i] = (char *)ft_calloc(end - start + 2, sizeof(char));
 			my_strcpy(ret[i], s, start, end);
 			i++;
 		}

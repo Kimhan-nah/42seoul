@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 12:09:29 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/12 21:51:18 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/13 14:07:54 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_args
 
 	char	*infile;
 	char	*outfile;
-	char	**cmds[2];		// cmds[2][*][*]
+	char	**cmds[2];
 
 	char	**path;
 
@@ -40,8 +40,9 @@ typedef struct s_args
 
 void	exit_msg(char *msg);
 void	parsing(char *argv[], char **envp, t_args *args);
-char	**cmd_parsing(char *argv);
 void	child_process1(t_args *args);
 void	parent_process(t_args *args);
+void	cmd_split(char **ret, char *str);
+int		cmd_count(char *str);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/19 12:35:12 by hannkim           #+#    #+#              #
-#    Updated: 2022/03/16 14:35:37 by hannkim          ###   ########.fr        #
+#    Updated: 2022/03/16 18:28:18 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ CC 			= gcc
 ifdef DEBUG
 	CFLAGS	= -g3
 else
-	CFLAGS		= -Wall -Wextra -Werror
+	CFLAGS = -g3
+#	CFLAGS		= -Wall -Wextra -Werror
 endif
 AR			= ar rcs
 RM			= rm -f

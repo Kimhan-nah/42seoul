@@ -6,11 +6,12 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 11:32:04 by hannkim           #+#    #+#             */
-/*   Updated: 2021/09/25 17:08:24 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/16 18:07:15 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../../includes/push_swap.h"
 
 static int	check_lld(unsigned long long res, int sign)
 {
@@ -34,8 +35,11 @@ static int	is_valid_ch(char ch)
 		return (3);
 	else if (ch >= '0' && ch <= '9')
 		return (4);
+	else if (ch == 0)
+		return (5);
 	else
-		return (0);
+		exit_msg("atoi : invalid argument.");
+	return (0);
 }
 
 int	ft_atoi(const char *s)

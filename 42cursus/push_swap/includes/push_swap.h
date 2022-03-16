@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/12 02:21:22 by hannkim           #+#    #+#             */
-/*   Updated: 2021/05/14 01:36:05 by hannkim          ###   ########.fr       */
+/*   Created: 2022/03/16 12:06:50 by hannkim           #+#    #+#             */
+/*   Updated: 2022/03/16 13:15:19 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+# include "../lib/libft/libft.h"
+# include <stdio.h>
+
+typedef struct s_node
 {
-	t_list	*ptr;
-	t_list	*tmp;
+	int				*data;
+	struct s_node	*prev;
+	struct s_node	*next;
+}	t_node;
 
-	if (!lst || !del)
-		return ;
-	ptr = *lst;
-	tmp = ptr;
-	while (ptr)
-	{
-		tmp = tmp->next;
-		del(ptr->content);
-		free(ptr);
-		ptr = tmp;
-	}
-	ptr = 0;
-	*lst = 0;
-}
+typedef struct s_lst
+{
+	t_node	head;
+	int		size;
+}	t_lst;
+
+typedef struct s_stack
+{
+	int				*content;
+	struct s_stack	*next;
+}	t_stack;
+
+#endif
+

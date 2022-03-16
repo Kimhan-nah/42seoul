@@ -6,45 +6,29 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:06:24 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/16 13:14:31 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/16 15:19:54 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int	stack_size(int argc, char *argv[])
+void	exit_msg(char *str)
 {
-	int		i;
-	int		j;
-	int		count;
-	char	**tmp;
-
-	i = 1;
-	count = 0;
-	while (i < argc)
-	{
-		j = 0;
-		tmp = ft_split(argv[i], ' ');
-		while (tmp[j])
-			j++;
-		count += j;
-		i++;
-		free(tmp);
-	}
-	return (count);
-}
-
-void	parsing(int argc, char *argv[], t_stack *stack)
-{
-	
-
+	write(2, str, ft_strlen(str));
+	exit(EXIT_FAILURE);
 }
 
 int main(int argc, char *argv[])
 {
-
-//	parsing(argc, argv, a);
+	t_list	a;
+	t_list	b;
 	
+	if (argc <= 1)
+		return (EXIT_SUCCESS);
+	parsing(argv + 1, &a);
+	// check sorted or duplicated
+	// sort
+	// compress operation (optional)
 
-	return (0);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/19 12:35:12 by hannkim           #+#    #+#              #
-#    Updated: 2022/03/16 18:28:18 by hannkim          ###   ########.fr        #
+#    Updated: 2022/03/16 19:43:29 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBFT_FLAGS		= -L ./$(LIBFT_DIR) -lft
 HEADERS 		= ./includes/
 SRCS_DIR		= ./srcs/
 
-SRC				= main.c parsing.c doubly-circular-linked-list.c
+SRC				= main.c parsing.c linked_list.c
 SRCS			= $(addprefix $(SRCS_DIR), $(SRC))
 OBJS 			= $(SRCS:.c=.o)
 

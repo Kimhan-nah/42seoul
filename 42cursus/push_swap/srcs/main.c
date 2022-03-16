@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:06:24 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/16 19:26:00 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/03/16 20:03:32 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,20 @@ void	exit_msg(char *str)
 	exit(EXIT_FAILURE);
 }
 
+void	precheck(t_stack *a)
+{
+	// check sorted  => success
+	t_list	*ptr;
+
+	ptr = a->head;
+	while (ptr->data < ptr->next->data && ptr != a->head->prev)
+		ptr = ptr->next;
+	if (ptr == a->head->prev)
+		exit(EXIT_SUCCESS);
+	// check duplicated
+	
+}
+
 int main(int argc, char *argv[])
 {
 	t_stack	*a;
@@ -26,9 +40,7 @@ int main(int argc, char *argv[])
 	if (argc <= 1)
 		return (EXIT_SUCCESS);
 	parsing(argv + 1, a);
-	// check sorted or duplicated
-	
-
+	precheck(a);
 
 	// sort
 	// compress operation (optional)

@@ -23,12 +23,14 @@ typedef struct s_info
 }	t_info;
 
 void	parsing(t_info *info, char *str);
-char	*strcut(char *start, char *end);
+void	parent_processor(t_info *info);
+void	first_child_processor(t_info *info);
 void	exit_msg(char *msg);
-char	*ft_strtrim(char const *s1, char const *set);
-void	putendl_fd(char *s, int fd);
-char	*ft_strjoin(char const *s1, char const *s2);
-void	cmd_split(char **ret, char *str);
-int		cmd_count(char *str);
+char	*strtrim(char const *s1, char const *set);
+//char	*ft_strtrim(char const *s1, char const *set);
+//void	putendl_fd(char *s, int fd);
+//char	*ft_strjoin(char const *s1, char const *s2);
+//void	cmd_split(char **ret, char *str);
+//int		cmd_count(char *str);
 
 #endif

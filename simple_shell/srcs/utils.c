@@ -12,7 +12,7 @@ static int	is_set(char c, char const *set)
 	return (0);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*strtrim(char const *s1, char const *set)
 {
 	char	*strtrim;
 	int		idx;
@@ -36,7 +36,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	return (strtrim);
 }
 
-void	putendl_fd(char *s, int fd)
+static void	putendl_fd(char *s, int fd)
 {
 	char	*ptr;
 
@@ -55,22 +55,4 @@ void	exit_msg(char *msg)
 {
 	putendl_fd(msg, STDERR_FILENO);
 	exit(EXIT_FAILURE);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*strjoin;
-	int		len;
-	int		idx;
-//	int		p_idx;
-
-	if (!s1 || !s2)
-		exit_msg("libft : strjoin");
-	idx = strlen(s1);
-	len = idx + strlen(s2);
-//	p_idx = 0;
-	strjoin = (char *)calloc(len + 1, sizeof(char));
-	memcpy(strjoin, s1, strlen(s1));
-	memcpy(strjoin + strlen(s1), s2, strlen(s2));
-	return (strjoin);
 }

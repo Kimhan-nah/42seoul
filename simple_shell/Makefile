@@ -11,7 +11,7 @@ RM			= rm -f
 HEADERS 		= ./includes/
 SRCS_DIR		= ./srcs/
 
-SRC				= main.c utils.c parsing.c cmd_split.c
+SRC				= main.c parsing.c processor.c utils.c
 SRCS			= $(addprefix $(SRCS_DIR), $(SRC))
 OBJS 			= $(SRCS:.c=.o)
 

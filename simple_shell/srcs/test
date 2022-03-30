@@ -1,0 +1,8 @@
+total 32
+drwxr-xr-x  7 hannah  staff   224  3 17 16:37 .
+drwxr-xr-x  8 hannah  staff   256  3 14 17:16 ..
+-rw-r--r--  1 hannah  staff  2017  3 14 17:16 cmd_split.c
+-rw-r--r--  1 hannah  staff  1415  3 14 17:16 main.c
+-rw-r--r--  1 hannah  staff  1724  3 14 17:16 parsing.c
+-rw-r--r--  1 hannah  staff  2489  3 14 17:16 processor.c
+-rw-r--r--  1 hannah  staff     0  3 17 16:37 test

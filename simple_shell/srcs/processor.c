@@ -2,15 +2,14 @@
 
 static void	cmd_execve(char **cmd)
 {
-//	printf("cmd : %s\n", *cmd);
 	execvp(cmd[0], cmd);
-//	execvp("lsd", cmd);
 	exit_msg(strerror(errno));
 }
 
 void	first_child_processor(t_info *info)
 {
 	int		infile_fd;
+	int		outfile_fd;
 
 	if (info->infile == NULL)
 		infile_fd = 0;				// STDIN
@@ -43,6 +42,7 @@ void	first_child_processor(t_info *info)
 
 static void	second_child_processor(t_info *info)
 {
+	int		infile_fd;
 	int		outfile_fd;
 
 	if (info->outfile == NULL)

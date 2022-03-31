@@ -20,6 +20,8 @@ typedef struct s_info
 	char	*infile;
 	char	*outfile;
 	char	**cmds[2];
+
+	int		background;
 }	t_info;
 
 void	parsing(t_info *info, char *str);

@@ -33,6 +33,7 @@ static char	*strcut(char *start, char *end)
 	return (ret);
 }
 
+// ' ' split
 static void	cmd_split(char **ret, char *str)
 {
 	char	*start;
@@ -43,10 +44,10 @@ static void	cmd_split(char **ret, char *str)
 	start = str;
 	end = str;
 	i = 0;
-	while (*end)
+	while (*end && *end != '<' && *end != '>')
 	{
 		chr = quotes_marks(&start, &end);
-		while (*end != chr && *end)
+		while (*end != chr && *end) 
 			end++;
 		if (end - start > 0)
 		{
@@ -83,16 +84,24 @@ static int	cmd_count(char *str)
 	return (count);
 }
 
-static char	**cmd_parsing(char *cmd)
+static char	**cmd_parsing(t_info *info, char *cmd)
 {
 	char	*str;
 	char	**ret;
 	int		len;
+	char	*tmp;
 
-	str = strtrim(cmd, " \n");		// alloc
+	str = strtrim(cmd, " \n&");		// alloc
 	len = cmd_count(str);
 	ret = (char **)calloc(len + 1, sizeof(char *));
+
+	if ((tmp = strchr(str, '<')) != NULL)
+		info->infile = strdup(tmp);
+	if ((tmp = strchr(str, '>')) != NULL)
+		info->outfile = strdup(tmp);
+
 	cmd_split(ret, str);
+
 	free(str);
 	return (ret);
 }
@@ -107,16 +116,16 @@ void	parsing(t_info *info, char *str)
 		if (*ptr == '|')
 		{
 			cmd = strcut(str, ptr);
-			info->cmds[0] = cmd_parsing(cmd);
+			info->cmds[0] = cmd_parsing(info, cmd);
 			free(cmd);
 
 			cmd = strcut(ptr + 1, str + strlen(str));
-			info->cmds[1] = cmd_parsing(cmd);
+			info->cmds[1] = cmd_parsing(info, cmd);
 			free(cmd);
 
 			return ;
 		}
 		ptr++;
 	}
-	info->cmds[0] = cmd_parsing(str);
+	info->cmds[0] = cmd_parsing(info, str);
 }

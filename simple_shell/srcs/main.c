@@ -14,7 +14,13 @@ int	main(void)
 		fflush(stdout);
 
 		info = (t_info *)calloc(1, sizeof(t_info));
+		if (strchr(str, '&') != NULL)		// background
+			info->background = 1;
+
 		parsing(info, str);
+
+		if (strcmp(info->cmds[0][0], "exit") == 0)
+			exit_msg("exit");
 
 		if (pipe(info->pipe_fd) == -1)		// create pipe
 			exit_msg(strerror(errno));

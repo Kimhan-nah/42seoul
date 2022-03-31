@@ -1,8 +1,0 @@
-total 80
-drwxr-xr-x   7 hannah  staff    224  3 31 14:51 .
-drwxr-xr-x   8 hannah  staff    256  3 30 17:18 ..
--rw-r--r--   1 hannah  staff    662  3 31 10:30 Makefile
-drwxr-xr-x   3 hannah  staff     96  3 31 14:37 includes
--rw-r--r--   1 hannah  staff      0  3 31 14:51 outfile
--rwxr-xr-x   1 hannah  staff  34930  3 31 14:50 pipex
-drwxr-xr-x  11 hannah  staff    352  3 31 14:50 srcs

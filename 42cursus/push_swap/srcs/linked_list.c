@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doubly-circular-linked-list.c                      :+:      :+:    :+:   */
+/*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 13:18:25 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/16 19:21:55 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/02 16:18:31 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	lstadd_back(t_list **head, t_list *new_list)
 
 	if (*head == 0)
 	{
-		printf("here\n");
+//		printf("here\n");
 		*head = new_list;
 		new_list->next = new_list;
 		new_list->prev = new_list;
@@ -40,4 +40,18 @@ t_list	*lstnew(int data)
 	list->next = list;
 	list->prev = list;
 	return (list);
+}
+
+void	lstprint(t_list *head)
+{
+	t_list	*ptr;
+
+	ptr = head;
+	while (ptr->next != head)
+	{
+		printf("%d ", ptr->data);
+		ptr = ptr->next;
+	}
+	printf("%d\n", ptr->data);
+
 }

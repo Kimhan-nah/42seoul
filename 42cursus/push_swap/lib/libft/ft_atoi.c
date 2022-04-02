@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 11:32:04 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/16 18:07:15 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/02 17:28:49 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 
 static int	check_lld(unsigned long long res, int sign)
 {
-	if (res > 9223372036854775807)
+//	if (res > 9223372036854775807)
+	if (res > 2147483647)
 	{
-		if (sign > 0)
-			return (-1);
+		if (sign < 0 && res == 2147483648)
+			return (res * sign);
 		else
-			return (0);
+			exit_msg("Invalid argument! : in ft_atoi");
 	}
 	return (res * sign);
 }
@@ -38,7 +39,7 @@ static int	is_valid_ch(char ch)
 	else if (ch == 0)
 		return (5);
 	else
-		exit_msg("atoi : invalid argument.");
+		exit_msg("Invalid argument! in ft_atoi");
 	return (0);
 }
 

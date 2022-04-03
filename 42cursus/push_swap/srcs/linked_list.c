@@ -6,26 +6,31 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 13:18:25 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/02 16:18:31 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/03 16:42:18 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	lstadd_back(t_list **head, t_list *new_list)
-{
+//int		is_empty(t_stack *stack)
+//{
+//	if (stack->len > 0)
+//		return (1);
+//	return (0);
+//}
 
-	if (*head == 0)
+void	lstadd_back(t_stack *stack, t_list *new_list)
+{
+	if (stack->head == NULL)
 	{
-//		printf("here\n");
-		*head = new_list;
+		stack->head = new_list;
 		new_list->next = new_list;
 		new_list->prev = new_list;
 		return ;
 	}
-	new_list->prev = (*head)->prev;
-	new_list->next = *head;
-	(*head)->prev = new_list;
+	new_list->prev = stack->head->prev;
+	new_list->next = stack->head;
+	stack->head->prev = new_list;
 	new_list->prev->next = new_list;
 }
 
@@ -34,8 +39,6 @@ t_list	*lstnew(int data)
 	t_list	*list;
 
 	list = (t_list *)ft_calloc(1, sizeof(t_list));
-	if (!list)
-		exit_msg("lstlist : alloc error");
 	list->data = data;
 	list->next = list;
 	list->prev = list;

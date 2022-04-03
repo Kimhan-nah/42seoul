@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:48 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/02 18:43:06 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/03 16:24:42 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ void	parsing(char **argv, t_stack *a)
 		while (tmp[j])
 		{
 			data = ft_atoi(tmp[j]);
-			lstadd_back(&(a->head), lstnew(data));
+			lstadd_back(a, lstnew(data));
 			j++;
+			(a->len)++;
 		}
 		free(tmp);
 		i++;

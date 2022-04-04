@@ -6,7 +6,7 @@
 /*   By: hannah <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 15:21:47 by hannah            #+#    #+#             */
-/*   Updated: 2022/04/03 16:58:15 by hannah           ###   ########.fr       */
+/*   Updated: 2022/04/04 14:31:14 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	swap(t_stack *stack)
 
 	if (stack->len < 2)
 		return ;
-	tmp = stack->head->prev;
+	tmp = stack->top;
 	top = tmp->prev;
 
-	stack->head->prev = top;
+	stack->top = top;
 	top->prev->next = tmp;
 
 	tmp->prev = top->prev;
@@ -40,7 +40,7 @@ void	push(t_stack *from, t_stack *to)
 
 	if (from->len < 1)
 		return ;
-	top = from->head->prev;
+	top = from->top;
 
 	if (top == from->head)
 		from->head = NULL;
@@ -50,7 +50,7 @@ void	push(t_stack *from, t_stack *to)
 		top->prev->next = top->next;
 	}
 	top->next = to->head;
-	top->prev = to->head->prev;
+	top->prev = to->top;
 	lstadd_back(to, top);
 	(from->len)--;
 	(to->len)++;
@@ -59,7 +59,7 @@ void	push(t_stack *from, t_stack *to)
 // ra, rb, rr
 void	rotate(t_stack *stack)
 {
-	stack->head = stack->head->prev;
+	stack->head = stack->top;
 }
 
 // rra, rrb, rrr

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:06:24 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/03 15:18:51 by hannah           ###   ########.fr       */
+/*   Updated: 2022/04/04 17:22:13 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int		is_sorted(t_stack *a)
 	t_list	*ptr;
 
 	ptr = a->head;
-	while (ptr->data < ptr->next->data && ptr != a->head->prev)
+	while (ptr->data < ptr->next->data && ptr != a->top)
 		ptr = ptr->next;
-	if (ptr == a->head->prev)		// sorted
+	if (ptr == a->top)		// sorted
 		return (1);
 	return (0);
 }
@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
 	precheck(a);
 
 	// sort
+//	sort(a, b);
 	
 	// compress operation (optional)
 

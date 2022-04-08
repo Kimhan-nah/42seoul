@@ -6,12 +6,23 @@
 /*   By: hannah <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 17:02:24 by hannah            #+#    #+#             */
-/*   Updated: 2022/04/04 17:22:01 by hannah           ###   ########.fr       */
+/*   Updated: 2022/04/06 14:55:53 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
+//static void b_to_a()
+//{
+//
+//
+//}
+//
+//static void	a_to_b()
+//{
+//
+//}
+//
 //void	sort(t_stack *a, t_stack *b)
 //{
 //

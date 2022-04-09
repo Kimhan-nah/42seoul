@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:06:24 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/04 17:22:13 by hannah           ###   ########.fr       */
+/*   Updated: 2022/04/09 16:06:33 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,17 @@ void	precheck(t_stack *a)
 int main(int argc, char *argv[])
 {
 	t_stack	*a;
-//	t_stack	*b;
+	t_stack	*b;
 
 	if (argc <= 1)
 		return (EXIT_SUCCESS);
 	a = (t_stack *)ft_calloc(1, sizeof(t_stack));
-//	b = (t_stack *)ft_calloc(1, sizeof(t_stack));
+	b = (t_stack *)ft_calloc(1, sizeof(t_stack));
 
 	parsing(argv + 1, a);
 	precheck(a);
+	sort(a, b);
 
-	// sort
-//	sort(a, b);
-	
 	// compress operation (optional)
 
 	return (EXIT_SUCCESS);

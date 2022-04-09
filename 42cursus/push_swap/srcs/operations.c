@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   operations.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hannah <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/03 15:21:47 by hannah            #+#    #+#             */
-/*   Updated: 2022/04/04 14:31:14 by hannah           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/push_swap.h"
 
-// sa, sb, ss
+// sa, sb
 void	swap(t_stack *stack)
 {
 	t_list	*tmp;
@@ -57,13 +45,53 @@ void	push(t_stack *from, t_stack *to)
 }
 
 // ra, rb, rr
-void	rotate(t_stack *stack)
+void	rotate(t_stack *a, t_stack *b, int stack)
 {
-	stack->head = stack->top;
+	if (stack == A)
+	{
+		a->head = a->top;
+		a->top = a->head->prev;
+	}
+	else if (stack == B)
+	{
+		b->head = b->top;
+		b->top = b->head->prev;
+	}
+	else
+	{
+		a->head = a->top;
+		a->top = a->head->prev;
+		b->head = b->top;
+		b->top = b->head->prev;
+	}
 }
 
 // rra, rrb, rrr
-void	reverse(t_stack *stack)
+void	reverse(t_stack *a, t_stack *b, int stack)
 {
-	stack->head = stack->head->next;
+	if (stack == A)
+	{
+		a->head = a->head->next;
+		a->top = a->head->prev;
+	}
+	else if (stack == B)
+	{
+		b->head = b->head->next;
+		b->top = b->head->prev;
+	}
+	else
+	{
+		a->head = a->head->next;
+		a->top = a->head->prev;
+		b->head = b->head->next;
+		b->top = b->head->prev;
+	}
 }
+
+// ss
+void	ss(t_stack *a, t_stack *b)
+{
+	swap(a);
+	swap(b);
+}
+

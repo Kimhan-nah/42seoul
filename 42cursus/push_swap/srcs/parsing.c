@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:48 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/04 17:21:46 by hannah           ###   ########.fr       */
+/*   Updated: 2022/04/09 16:35:01 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,13 @@ void	parsing(char **argv, t_stack *a)
 			data = ft_atoi(tmp[j]);
 			lstadd_front(a, lstnew(data));
 			j++;
-			(a->len)++;
+			(a->max)++;
 		}
 		free(tmp);
 		i++;
 	}
+	a->len = a->max + 1;
+
 	lstprint(a->head);
 	indexing(a);
 	printf("===\n");

@@ -1,80 +1,65 @@
 
 #include "../includes/push_swap.h"
 
-static void	rrr(t_operations *operations, t_stack *a, t_stack *b)
+static void b_to_a(t_stack *a, t_stack *b, int min, int max)
 {
-	int ra;
-	int rb;
-	int rrr;
+	int size;
 
-	ra = operations->ra;
-	rb = operations->rb;
-	rrr = 0;
-	if (ra > 0 && rb > 0)
+	size = max - min + 1;
+	if (size <= 3)
 	{
-		if (ra < rb)
-			rrr = ra;
-		else
-			rrr = rb;
-		ra -= rrr;
-		rb -= rrr;
-	}
-	while (rrr > 0)
-		reverse(a, b, AB);
-	while (ra > 0)
-		reverse(a, b, A);
-	while (rb > 0)
-		reverse(a, b, B);
-}
-
-static void b_to_a(t_operations *operations, t_stack *a, t_stack *b)
-{
-	if (b->len == 0)
+		// small_sort();
 		return ;
+	}
+
+
 }
 
-static void	a_to_b(t_operations *operations, t_stack *a, t_stack *b)
+static void	a_to_b(t_stack *a, t_stack *b, int min, int max)
 {
-	int	count;
-	int pivot_b;		// small pivot
+	int pivot_a;
+	int pivot_b;
+	int	size;
+	int rb;
+	int pb;
 
-	count = a->len;
-	while (count > 0)
+	pivot_a = (min + max) / 2;
+	pivot_b = pivot_a / 2;
+	size = max - min + 1;
+	rb = 0;
+	pb = 0;
+	if (size <= 3)
 	{
-		a->min = (a->min + a->max) / 2;		// a->min : big pivot
-		pivot_b = a->min / 2;
-		if (a->top->data >= a->min)		// 큰 값 아래로 보내기 : ra
-		{
+		//small_sort();
+		return ;
+	}
+	while (size > 0)
+	{
+		if (a->top->data > pivot_a)		// ra
 			rotate(a, b, A);
-			operations->ra++;
-		}
-		else							// 작은 값 b로 보내기 : pb
+		else							// pb
 		{
 			push(a, b);
-			operations->pb++;
-			(a->len)--;
-			(b->len)++;
-			if (b->top->data > pivot_b)		// 큰 값 아래로 보내기 : rb
+			pb++;
+//			(b->len)++;
+			if (b->top->data > pivot_b)
 			{
-				rotate(a, b, B);
-				operations->rb++;
+				rotate(a, b, B);		// rb
+				rb++;
 			}
 		}
-		count--;
+		size--;
 	}
-	// rrr이 아니라 rrb 만 하면 되는 거 아님??? 왜 rrr 하고 ra 남은 횟수가 나온다는 거?
-	
-	rrr(operations, a, b);
-
-	// small_sort()
-
+	while (rb > 0)
+	{
+		reverse(a, b, B);				// rrb
+		rb--;
+	}
+	a_to_b(a, b, pivot_a + 1, max);
+	b_to_a(a, b, min, pivot_a);
 }
 
 void	sort(t_stack *a, t_stack *b)
 {
-	t_operations	*operations;
-
-	operations = (t_operations *)ft_calloc(1, sizeof(t_operations));
-	a_to_b(operations, a, b);	
-	b_to_a(operations, a, b);
+	a_to_b(a, b, 0, a->max);	
 }

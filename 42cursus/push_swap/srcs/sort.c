@@ -100,8 +100,5 @@ static void	a_to_b(t_stack *a, t_stack *b, int min, int max)
 
 void	sort(t_stack *a, t_stack *b)
 {
-//	t_operations *operations;
-//
-//	operations = (t_operations *)ft_calloc(1, sizeof(t_operations));
 	a_to_b(a, b, 0, a->max);
 }

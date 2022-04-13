@@ -49,8 +49,8 @@ void	push(t_stack *from, t_stack *to, int ab)
 {
 	t_list	*top;
 
-//	if (from->len < 1)
-//		return ;
+	if (from->len < 1)
+		return ;
 	if (ab == A)
 		printf("pa\n");
 	else
@@ -72,21 +72,13 @@ void	push(t_stack *from, t_stack *to, int ab)
 
 	lstadd_back(to, top);
 
-//	if (top == from->bottom)
-//		from->bottom = NULL;
-//	else
-//	{
-//		top->next->prev = top->prev;
-//		top->prev->next = top->next;
-//	}
-//	top->next = to->bottom;
-//	top->prev = to->top;
-//	lstadd_back(to, top);
-
 	(from->len)--;
 	(to->len)++;
 
-	stackprint(from, to);
+	if (ab == A)
+		stackprint(to, from);
+	else if (ab == B)
+		stackprint(from, to);
 }
 
 // ra, rb, rr

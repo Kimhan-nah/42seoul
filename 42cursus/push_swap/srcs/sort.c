@@ -14,13 +14,13 @@ static void	small_sort_b(t_stack *a, t_stack *b, int size)
 	}
 	else if (size == 3)
 	{
-		if (a->top->data < a->top->prev->data)
+		if (b->top->data < b->top->prev->data)
 			swap(b, B);
 		rotate(a, b, B);
-		if (a->top->data < a->top->prev->data)
+		if (b->top->data < b->top->prev->data)
 			swap(b, B);
 		reverse(a, b, B);
-		if (a->top->data < a->top->prev->data)
+		if (b->top->data < b->top->prev->data)
 			swap(b, B);
 	}
 	while (size > 0)
@@ -55,7 +55,7 @@ static void	small_sort_a(t_stack *a, t_stack *b, int size)
 
 static void b_to_a(t_stack *a, t_stack *b, int min, int max)
 {
-	printf("!!!!!!!!B->A!!!!!!!!\n");
+	printf("!!!!!!!!B->A (%d~ %d)!!!!!!!!\n", min, max);
 	int mid_a;
 	int mid_b;
 	int	size;
@@ -63,7 +63,7 @@ static void b_to_a(t_stack *a, t_stack *b, int min, int max)
 	int	rb;
 
 	mid_b = (min + max) / 2;
-	mid_a = (min + mid_b) / 2;
+	mid_a = (mid_b + max) / 2;
 	size = max - min + 1;
 	ra = 0;
 	rb = 0;
@@ -76,6 +76,7 @@ static void b_to_a(t_stack *a, t_stack *b, int min, int max)
 
 	while (size > 0)
 	{
+		printf("===size %d===\n", size);
 		if (b->top->data < mid_b)
 		{
 			rotate(a, b, B);
@@ -93,8 +94,8 @@ static void b_to_a(t_stack *a, t_stack *b, int min, int max)
 		size--;
 	}
 
-
 	// rrr 추가하기
+
 	while (ra > 0)
 	{
 		reverse(a, b, A);				// rra
@@ -107,15 +108,17 @@ static void b_to_a(t_stack *a, t_stack *b, int min, int max)
 		rb--;
 	}
 
-	b_to_a(a, b, min, mid_b);
+	b_to_a(a, b, min, mid_b - 1);
 
-	a_to_b(a, b, mid_a, max);
-	a_to_b(a, b, mid_b + 1, mid_a - 1);
+
+	a_to_b(a, b, mid_a, max);				// 조금 더 큰 부분
+	a_to_b(a, b, mid_b, mid_a - 1);		// 조금 더 작은 부분
+
 }
 
 static void	a_to_b(t_stack *a, t_stack *b, int min, int max)
 {
-	printf("!!!!!!!!A->B!!!!!!!!\n");
+	printf("!!!!!!!!A->B (%d~%d)!!!!!!!!\n", min, max);
 	int mid_a;
 	int mid_b;
 	int	size;
@@ -132,6 +135,8 @@ static void	a_to_b(t_stack *a, t_stack *b, int min, int max)
 	if (size <= 3)
 	{
 		small_sort_a(a, b, size);
+//		b_to_a(a, b, min, mid_b);
+//		b_to_a(a, b, mid_b + 1, mid_a);
 		return ;
 	}
 	while (size > 0)
@@ -171,11 +176,13 @@ static void	a_to_b(t_stack *a, t_stack *b, int min, int max)
 
 	a_to_b(a, b, mid_a + 1, max);
 
-	b_to_a(a, b, min, mid_b);
-	b_to_a(a, b, mid_b + 1, mid_a);
+	b_to_a(a, b, mid_b + 1, mid_a);		// 조금 더 큰 부분
+	b_to_a(a, b, min, mid_b);			// 조금 더 작은 부분
 }
 
 void	sort(t_stack *a, t_stack *b)
 {
 	a_to_b(a, b, 0, a->max);
+//	if (a->top->data > a->top->prev->data)
+//		swap(a, A);
 }

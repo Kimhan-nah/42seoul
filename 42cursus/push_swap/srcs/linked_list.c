@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 13:18:25 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/13 17:22:32 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/13 21:24:17 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	stackprint(t_stack *a, t_stack *b)
 {
 	printf("A : ");
 	lstprint(a->top);
+	printf("\n");
+
 	printf("B : ");
 	lstprint(b->top);
 	printf("\n\n");

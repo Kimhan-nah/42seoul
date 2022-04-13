@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 13:18:25 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/04 15:44:20 by hannah           ###   ########.fr       */
+/*   Updated: 2022/04/13 17:22:32 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,34 @@
 
 void	lstadd_front(t_stack *stack, t_list *new_list)
 {
-	if (stack->head == NULL)
+	if (stack->bottom == NULL)
 	{
-		stack->head = new_list;
+		stack->bottom = new_list;
 		stack->top = new_list;
 		new_list->next = new_list;
 		new_list->prev = new_list;
 		return ;
 	}
 	new_list->prev = stack->top;
-	new_list->next = stack->head;
+	new_list->next = stack->bottom;
 
-	stack->head = new_list;
+	stack->bottom = new_list;
 	new_list->next->prev = new_list;
 	new_list->prev->next = new_list;
 }
 
 void	lstadd_back(t_stack *stack, t_list *new_list)
 {
-	if (stack->head == NULL)
+	if (stack->bottom == NULL)
 	{
-		stack->head = new_list;
+		stack->bottom = new_list;
 		stack->top = new_list;
 		new_list->next = new_list;
 		new_list->prev = new_list;
 		return ;
 	}
 	new_list->prev = stack->top;
-	new_list->next = stack->head;
+	new_list->next = stack->bottom;
 	stack->top = new_list;
 
 	new_list->next->prev = new_list;
@@ -59,16 +59,27 @@ t_list	*lstnew(int data)
 	return (list);
 }
 
-void	lstprint(t_list *head)
+void	lstprint(t_list *top)
 {
 	t_list	*ptr;
 
-	ptr = head;
-	while (ptr->next != head)
+	ptr = top;
+	if (top == NULL)
+		return ;
+	while (ptr->prev != top)
 	{
 		printf("%d ", ptr->data);
-		ptr = ptr->next;
+		ptr = ptr->prev;
 	}
 	printf("%d\n", ptr->data);
 
+}
+
+void	stackprint(t_stack *a, t_stack *b)
+{
+	printf("A : ");
+	lstprint(a->top);
+	printf("B : ");
+	lstprint(b->top);
+	printf("\n\n");
 }

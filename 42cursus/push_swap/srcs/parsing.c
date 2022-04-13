@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:48 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/09 16:35:01 by hannah           ###   ########.fr       */
+/*   Updated: 2022/04/13 17:06:10 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	set_data(t_stack *a, int *arr)
 	t_list	*ptr;
 	int		i;
 
-	ptr = a->head;
+	ptr = a->bottom;
 	i = 0;
 	while (i < a->len)
 	{
@@ -77,8 +77,8 @@ static void	indexing(t_stack *a)
 	int		*tmp;
 	int		i;
 
-	ptr = a->head;
-	tmp = (int *)ft_calloc(a->len, sizeof(int));
+	ptr = a->bottom;
+	tmp = (int *)ft_calloc(a->max, sizeof(int));
 	i = 0;
 	while (i < a->len)
 	{
@@ -86,7 +86,9 @@ static void	indexing(t_stack *a)
 		i++;
 		ptr = ptr->next;
 	}
-	quick_sort(tmp, 0, a->len - 1);
+
+	quick_sort(tmp, 0, a->max);
+
 	set_data(a, tmp);
 	free(tmp);
 }
@@ -108,15 +110,11 @@ void	parsing(char **argv, t_stack *a)
 			data = ft_atoi(tmp[j]);
 			lstadd_front(a, lstnew(data));
 			j++;
-			(a->max)++;
+			(a->len)++;
 		}
 		free(tmp);
 		i++;
 	}
-	a->len = a->max + 1;
-
-	lstprint(a->head);
+	a->max = a->len - 1;
 	indexing(a);
-	printf("===\n");
-	lstprint(a->head);
 }

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:06:50 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/09 17:07:22 by hannah           ###   ########.fr       */
+/*   Updated: 2022/04/13 17:05:28 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef struct s_list
 
 typedef struct s_stack
 {
-	struct s_list	*head;
 	struct s_list	*top;
+	struct s_list	*bottom;
 	int				len;
 	int				max;
 	int				min;
@@ -60,11 +60,14 @@ void	lstadd_front(t_stack *stack, t_list *new_list);
 void	lstprint(t_list *head);
 void	sort(t_stack *a, t_stack *b);
 
-void	swap(t_stack *stack);
-void	push(t_stack *from, t_stack *to);
-void	rotate(t_stack *a, t_stack *b, int stack);
-void	reverse(t_stack *a, t_stack *b, int stack);
+void	swap(t_stack *stack, int ab);
+void	push(t_stack *from, t_stack *to, int ab);
+void	rotate(t_stack *a, t_stack *b, int ab);
+void	reverse(t_stack *a, t_stack *b, int ab);
 void	ss(t_stack *a, t_stack *b);
+
+
+void	stackprint(t_stack *a, t_stack *b);
 
 #endif
 

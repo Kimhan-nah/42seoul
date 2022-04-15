@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:48 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/15 12:02:17 by hannah           ###   ########.fr       */
+/*   Updated: 2022/04/15 14:45:10 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	set_data(t_stack *a, int *arr)
 		while (ptr->data != arr[i])
 			ptr = ptr->next;
 		ptr->data = i;
+		printf("i : %d, ptr->data :  %d\n",i, ptr->data);
 		i++;
 	}
 }

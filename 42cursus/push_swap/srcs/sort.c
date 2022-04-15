@@ -6,7 +6,7 @@ static void b_to_a(t_stack *a, t_stack *b, int min, int max);
 
 static void	small_sort_b(t_stack *a, t_stack *b, int size)
 {
-	printf("!!!!!!!!SMALL B!!!!!!!!\n");
+//	printf("!!!!!!!!SMALL B!!!!!!!!\n");
 	if (size == 2)
 	{
 		if (b->top->data < b->top->prev->data)
@@ -30,9 +30,10 @@ static void	small_sort_b(t_stack *a, t_stack *b, int size)
 	}
 }
 
+//static void	small_sort_a(t_stack *a, t_stack *b, int min, int max)
 static void	small_sort_a(t_stack *a, t_stack *b, int size)
 {
-	printf("!!!!!!!!SMALL A!!!!!!!!\n");
+//	printf("!!!!!!!!SMALL A!!!!!!!!\n");
 	if (size <= 1)
 		return ;
 	else if (size == 2)
@@ -55,7 +56,7 @@ static void	small_sort_a(t_stack *a, t_stack *b, int size)
 
 static void b_to_a(t_stack *a, t_stack *b, int min, int max)
 {
-	printf("!!!!!!!!B->A (%d~ %d)!!!!!!!!\n", min, max);
+//	printf("!!!!!!!!B->A (%d~ %d)!!!!!!!!\n", min, max);
 	int mid_a;
 	int mid_b;
 	int	size;
@@ -76,7 +77,7 @@ static void b_to_a(t_stack *a, t_stack *b, int min, int max)
 
 	while (size > 0)
 	{
-		printf("===size %d===\n", size);
+//		printf("===size %d===\n", size);
 		if (b->top->data < mid_b)
 		{
 			rotate(a, b, B);
@@ -94,31 +95,29 @@ static void b_to_a(t_stack *a, t_stack *b, int min, int max)
 		size--;
 	}
 
-	// rrr 추가하기
-
-	while (ra > 0)
-	{
-		reverse(a, b, A);				// rra
-		ra--;
-	}
-
 	while (rb > 0)
 	{
 		reverse(a, b, B);				// rrb
 		rb--;
 	}
 
-	b_to_a(a, b, min, mid_b - 1);
-
 
 	a_to_b(a, b, mid_a, max);				// 조금 더 큰 부분
+											//
+	while (ra > 0)
+	{
+		reverse(a, b, A);				// rra
+		ra--;
+	}
+
 	a_to_b(a, b, mid_b, mid_a - 1);		// 조금 더 작은 부분
 
+	b_to_a(a, b, min, mid_b - 1);
 }
 
 static void	a_to_b(t_stack *a, t_stack *b, int min, int max)
 {
-	printf("!!!!!!!!A->B (%d~%d)!!!!!!!!\n", min, max);
+//	printf("!!!!!!!!A->B (%d~%d)!!!!!!!!\n", min, max);
 	int mid_a;
 	int mid_b;
 	int	size;
@@ -141,7 +140,7 @@ static void	a_to_b(t_stack *a, t_stack *b, int min, int max)
 	}
 	while (size > 0)
 	{
-		printf("===size %d===\n", size);
+//		printf("===size %d===\n", size);
 		if (a->top->data > mid_a)		// ra
 		{
 			rotate(a, b, A);
@@ -180,9 +179,55 @@ static void	a_to_b(t_stack *a, t_stack *b, int min, int max)
 	b_to_a(a, b, min, mid_b);			// 조금 더 작은 부분
 }
 
+static void	three_sort(t_stack *a, t_stack *b, int min, int max)
+{
+	int size;
+
+	size = max - min + 1;
+	if (size <= 1)
+		return ;
+	else if (size == 2)
+	{
+		if (a->top->data > a->top->prev->data)
+			swap(a, A);
+	}
+	else if (size == 3)
+	{
+		while (a->bottom->data != max)
+			rotate(a, b, A);
+		if (a->top->data > a->top->prev->data)
+			swap(a, A);
+	}
+}
+
+static void	five_sort(t_stack *a, t_stack *b, int size)
+{
+	int pivot;
+	int	i;
+
+	pivot = size / 2;
+	i = 0;
+	while (i < size)
+	{
+		if (a->top->data < pivot)		// pb
+			push(a, b, B);
+		else
+			rotate(a, b, A);			// ra
+		i++;
+	}
+	three_sort(a, b, 2, size - 1);
+	push(b, a, A);					// pa
+	push(b, a, A);					// pa
+	if (a->top->data > a->top->prev->data)			// sa
+		swap(a, A);
+}
+
 void	sort(t_stack *a, t_stack *b)
 {
-	a_to_b(a, b, 0, a->max);
-//	if (a->top->data > a->top->prev->data)
-//		swap(a, A);
+	if (a->len <= 3)
+		three_sort(a, b, 0, 2);
+	else if (a->len <= 5)
+		five_sort(a, b, a->len);
+	else
+		a_to_b(a, b, 0, a->max);
 }

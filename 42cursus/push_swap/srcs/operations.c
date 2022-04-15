@@ -35,12 +35,12 @@ void	swap(t_stack *stack, int ab)
 	}
 
 
-	if (ab == A)
-		printf("A : ");
-	else if (ab == B)
-		printf("B : ");
-	lstprint(stack->top);
-	printf("\n");
+//	if (ab == A)
+//		printf("A : ");
+//	else if (ab == B)
+//		printf("B : ");
+//	lstprint(stack->top);
+//	printf("\n");
 
 }
 
@@ -75,10 +75,10 @@ void	push(t_stack *from, t_stack *to, int ab)
 	(from->len)--;
 	(to->len)++;
 
-	if (ab == A)
-		stackprint(to, from);
-	else if (ab == B)
-		stackprint(from, to);
+//	if (ab == A)
+//		stackprint(to, from);
+//	else if (ab == B)
+//		stackprint(from, to);
 }
 
 // ra, rb, rr
@@ -105,7 +105,7 @@ void	rotate(t_stack *a, t_stack *b, int ab)
 		b->top = b->bottom->prev;
 	}
 
-	stackprint(a, b);
+//	stackprint(a, b);
 }
 
 // rra, rrb, rrr
@@ -132,7 +132,7 @@ void	reverse(t_stack *a, t_stack *b, int ab)
 		b->top = b->bottom->prev;
 	}
 
-	stackprint(a, b);
+//	stackprint(a, b);
 }
 
 //ss

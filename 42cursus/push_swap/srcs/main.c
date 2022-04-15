@@ -6,16 +6,15 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:06:24 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/13 17:22:50 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/14 22:29:07 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	exit_msg(char *str)
+void	exit_msg()
 {
-	write(2, "Error : ", 9);
-	write(2, str, ft_strlen(str));
+	ft_putstr_fd("Error\n", 2);
 	exit(EXIT_FAILURE);
 }
 
@@ -24,13 +23,11 @@ void	is_sorted(t_stack *a)		// 오름차순 (bottom 가 큰 값이어야 함)
 	t_list	*ptr;
 
 	ptr = a->bottom;
-	while (ptr->data > ptr->next->data && ptr != a->top)
+	while (ptr != a->top && ptr->data > ptr->next->data)
 		ptr = ptr->next;
 	if (ptr == a->top)		// sorted
-	{
-//		printf("already sorted!\n");
 		exit(EXIT_SUCCESS);
-	}
+//		exit_msg();
 }
 
 void	precheck(t_stack *a)
@@ -49,7 +46,7 @@ void	precheck(t_stack *a)
 		while (cmp != ptr)
 		{
 			if (cmp->data == ptr->data)
-				exit_msg("Duplicated!");
+				exit_msg();
 			cmp = cmp->next;
 		}
 		ptr = ptr->next;
@@ -62,7 +59,7 @@ int main(int argc, char *argv[])
 	t_stack	*b;
 
 	if (argc <= 1)
-		return (EXIT_SUCCESS);
+		exit_msg();
 	a = (t_stack *)ft_calloc(1, sizeof(t_stack));
 	b = (t_stack *)ft_calloc(1, sizeof(t_stack));
 
@@ -76,7 +73,7 @@ int main(int argc, char *argv[])
 
 	printf("\n\n<<After Sort!>>\n");
 	stackprint(a, b);
-	// compress operation (optional)
+/// compress operation (optional)
 	free(a);
 	free(b);
 

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:06:50 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/13 17:05:28 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/14 20:28:54 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct	s_operations
 	int	rrr;
 }	t_operations;
 
-void	exit_msg(char *str);
+void	exit_msg();
 void	parsing(char **argv, t_stack *a);
 t_list	*lstnew(int data);
 void	lstadd_back(t_stack *stack, t_list *new_list);

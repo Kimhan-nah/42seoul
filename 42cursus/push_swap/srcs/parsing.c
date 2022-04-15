@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:48 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/15 16:10:18 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 17:55:42 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,10 @@ static void	set_data(t_stack *a, int *arr)
 	}
 }
 
-static void	value_swap(int *arr, int i, int j)
-{
-	int tmp;
-
-	tmp = arr[i];
-	arr[i] = arr[j];
-	arr[j] = tmp;
-}
-
 static int	partition(int *arr, int start, int end)
 {
-	int idx_pivot;
-	int pivot;
+	int	idx_pivot;
+	int	pivot;
 	int	i;
 
 	idx_pivot = start;
@@ -61,7 +52,7 @@ static int	partition(int *arr, int start, int end)
 
 static void	quick_sort(int *arr, int start, int end)
 {
-	int q;
+	int	q;
 
 	if (start < end)
 	{
@@ -99,7 +90,7 @@ void	parsing(char **argv, t_stack *a)
 	char	**tmp;
 
 	i = 0;
-	while(argv[i])
+	while (argv[i])
 	{
 		j = 0;
 		tmp = ft_split(argv[i], ' ');
@@ -107,6 +98,7 @@ void	parsing(char **argv, t_stack *a)
 		{
 			data = ft_atoi(tmp[j]);
 			lstadd_front(a, lstnew(data));
+			free(tmp[j]);
 			j++;
 			(a->len)++;
 		}

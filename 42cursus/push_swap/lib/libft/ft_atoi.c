@@ -6,25 +6,12 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 11:32:04 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/02 17:28:49 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 19:01:52 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "../../includes/push_swap.h"
-
-static int	check_lld(unsigned long long res, int sign)
-{
-//	if (res > 9223372036854775807)
-	if (res > 2147483647)
-	{
-		if (sign < 0 && res == 2147483648)
-			return (res * sign);
-		else
-			exit_msg("Invalid argument! : in ft_atoi");
-	}
-	return (res * sign);
-}
 
 static int	is_valid_ch(char ch)
 {
@@ -39,8 +26,34 @@ static int	is_valid_ch(char ch)
 	else if (ch == 0)
 		return (5);
 	else
-		exit_msg("Invalid argument! in ft_atoi");
+		exit_msg();
 	return (0);
+}
+
+static int	check(unsigned long long res, int sign, const char *s)
+{
+	char	*ptr;
+
+	ptr = (char *)s;
+	while (is_valid_ch(*ptr) == 1)
+		ptr++;
+	if (res == 0)
+	{
+		if (is_valid_ch(*ptr) == 2 || is_valid_ch(*ptr) == 3)
+			ptr++;
+		if (*ptr == 0)
+			exit_msg();
+		if (is_valid_ch(*ptr) == 2 || is_valid_ch(*ptr) == 3)
+			exit_msg();
+	}
+	if (res > 2147483647)
+	{
+		if (sign < 0 && res == 2147483648)
+			return (res * sign);
+		else
+			exit_msg();
+	}
+	return (res * sign);
 }
 
 int	ft_atoi(const char *s)
@@ -68,6 +81,5 @@ int	ft_atoi(const char *s)
 		ptr++;
 		count++;
 	}
-	res = check_lld(res, sign);
-	return (res);
+	return (check(res, sign, s));
 }

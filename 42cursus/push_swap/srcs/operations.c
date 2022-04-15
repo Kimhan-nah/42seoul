@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:07:29 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/15 16:07:31 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 17:21:24 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	swap(t_stack *stack, int ab)
 	t_list	*tmp;
 
 	if (ab == A)
-		printf("sa\n");
+		ft_putstr_fd("sa\n", 1);
 	else if (ab == B)
-		printf("sb\n");
+		ft_putstr_fd("sb\n", 1);
 	if (stack->len < 2)
 		return ;
 	tmp = stack->top->prev;
@@ -47,9 +47,9 @@ void	push(t_stack *from, t_stack *to, int ab)
 	if (from->len < 1)
 		return ;
 	if (ab == A)
-		printf("pa\n");
+		ft_putstr_fd("pa\n", 1);
 	else
-		printf("pb\n");
+		ft_putstr_fd("pb\n", 1);
 	top = from->top;
 	if (from->top == from->bottom)
 	{
@@ -67,47 +67,49 @@ void	push(t_stack *from, t_stack *to, int ab)
 	(to->len)++;
 }
 
-void	rotate(t_stack *a, t_stack *b, int ab)
+void	rotate(t_stack *a, t_stack *b, int ab, int *cnt)
 {
 	if (ab == A)
 	{
-		printf("ra\n");
+		ft_putstr_fd("ra\n", 1);
 		a->bottom = a->top;
 		a->top = a->bottom->prev;
 	}
 	else if (ab == B)
 	{
-		printf("rb\n");
+		ft_putstr_fd("rb\n", 1);
 		b->bottom = b->top;
 		b->top = b->bottom->prev;
 	}
 	else
 	{
-		printf("rr\n");
+		ft_putstr_fd("rr\n", 1);
 		a->bottom = a->top;
 		a->top = a->bottom->prev;
 		b->bottom = b->top;
 		b->top = b->bottom->prev;
 	}
+	if (cnt != NULL)
+		(*cnt)++;
 }
 
 void	reverse(t_stack *a, t_stack *b, int ab)
 {
 	if (ab == A)
 	{
-		printf("rra\n");
+		ft_putstr_fd("rra\n", 1);
 		a->bottom = a->bottom->next;
 		a->top = a->bottom->prev;
 	}
 	else if (ab == B)
 	{
-		printf("rrb\n");
+		ft_putstr_fd("rrb\n", 1);
 		b->bottom = b->bottom->next;
 		b->top = b->bottom->prev;
 	}
 	else
 	{
-		printf("rrr\n");
+		ft_putstr_fd("rrr\n", 1);
 		a->bottom = a->bottom->next;
 		a->top = a->bottom->prev;
 		b->bottom = b->bottom->next;
@@ -119,5 +121,5 @@ void	ss(t_stack *a, t_stack *b)
 {
 	swap(a, AB);
 	swap(b, AB);
-	printf("ss\n");
+	ft_putstr_fd("ss\n", 1);
 }

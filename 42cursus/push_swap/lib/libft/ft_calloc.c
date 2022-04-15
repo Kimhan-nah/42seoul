@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 15:32:35 by hannkim           #+#    #+#             */
-/*   Updated: 2022/03/16 18:56:38 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 17:39:29 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*ft_calloc(size_t count, size_t size)
 
 	mem = (unsigned char *)malloc(count * size);
 	if (!mem)
-		exit_msg("ft_calloc : alloc error");
+		exit_msg();
 	idx = 0;
 	while (idx < count * size)
 	{

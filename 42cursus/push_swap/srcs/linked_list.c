@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 13:18:25 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/15 16:08:10 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 16:28:26 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,30 +55,4 @@ t_list	*lstnew(int data)
 	list->next = NULL;
 	list->prev = NULL;
 	return (list);
-}
-
-void	lstprint(t_list *top)
-{
-	t_list	*ptr;
-
-	ptr = top;
-	if (top == NULL)
-		return ;
-	while (ptr->prev != top)
-	{
-		printf("%d ", ptr->data);
-		ptr = ptr->prev;
-	}
-	printf("%d\n", ptr->data);
-}
-
-// 지우기
-void	stackprint(t_stack *a, t_stack *b)
-{
-	printf("A : ");
-	lstprint(a->top);
-	printf("\n");
-	printf("B : ");
-	lstprint(b->top);
-	printf("\n\n");
 }

@@ -6,12 +6,12 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/06 16:37:29 by hannkim           #+#    #+#              #
-#    Updated: 2021/06/05 22:59:57 by hannkim          ###   ########.fr        #
+#    Updated: 2022/04/15 18:20:10 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra
 AR = ar
 ARFLAGS = rcs

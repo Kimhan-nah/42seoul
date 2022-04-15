@@ -6,12 +6,12 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/19 12:35:12 by hannkim           #+#    #+#              #
-#    Updated: 2022/04/15 15:07:00 by hannkim          ###   ########.fr        #
+#    Updated: 2022/04/15 18:19:55 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= push_swap
-CC 			= gcc
+CC 			= cc
 ifdef DEBUG
 	CFLAGS	= -g3
 else
@@ -26,7 +26,7 @@ LIBFT_FLAGS		= -L ./$(LIBFT_DIR) -lft
 HEADERS 		= ./includes/
 SRCS_DIR		= ./srcs/
 
-SRC				= main.c parsing.c linked_list.c operations.c sort.c
+SRC				= main.c parsing.c linked_list.c operations.c a_to_b.c b_to_a.c small_sort.c utils.c
 SRCS			= $(addprefix $(SRCS_DIR), $(SRC))
 OBJS 			= $(SRCS:.c=.o)
 

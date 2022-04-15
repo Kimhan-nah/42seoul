@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:48 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/15 14:45:10 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 15:55:17 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,21 @@ static void	set_data(t_stack *a, int *arr)
 	t_list	*ptr;
 	int		i;
 
-	ptr = a->bottom;
 	i = 0;
 	while (i < a->len)
 	{
+		printf("\n========arr[%d] : %d=======\n", i, arr[i]);
+
+		ptr = a->bottom;
 		while (ptr->data != arr[i])
+		{
+			printf("ptr->data : %d\n", ptr->data);
 			ptr = ptr->next;
-		ptr->data = i;
-		printf("i : %d, ptr->data :  %d\n",i, ptr->data);
+		}
+		printf("ptr->data : %d\n", ptr->data);
+		if (ptr)
+		ptr->idx = i;
+		printf("----PTR DATA %d---\n",  ptr->data);
 		i++;
 	}
 }
@@ -64,8 +71,30 @@ static void	quick_sort(int *arr, int start, int end)
 {
 	int q;
 
+//	int i = start;
+//	int j = 0;
+//	int k = end + 1;
+
 	if (start < end)
 	{
+//		printf("\n<<<Quick Sort : arr[%d] ~ arr[%d]>>>\n", start, end);
+//		while (j < start)
+//		{
+//			printf("%d ", arr[j]);
+//			j++;
+//		}
+//		while (i <= end)
+//		{
+//			printf("%d ", arr[i]);
+//			i++;
+//		}
+//		while (k <= 9)
+//		{
+//			printf("%d ", arr[k]);
+//			k++;
+//		}
+		printf("\n");
+
 		q = partition(arr, start, end);
 		quick_sort(arr, start, q - 1);
 		quick_sort(arr, q + 1, end);
@@ -75,27 +104,35 @@ static void	quick_sort(int *arr, int start, int end)
 static void	indexing(t_stack *a)
 {
 	t_list	*ptr;
-	int		*tmp;
+	int		*arr;
 	int		i;
 
 	ptr = a->bottom;
-	tmp = (int *)ft_calloc(a->max, sizeof(int));
+	arr = (int *)ft_calloc(a->len, sizeof(int));
 	i = 0;
 	while (i < a->len)
 	{
-		tmp[i] = ptr->data;
+		arr[i] = ptr->data;
 		i++;
 		ptr = ptr->next;
 	}
 
-	quick_sort(tmp, 0, a->max);
+	quick_sort(arr, 0, a->max);
 
+	printf("INDEXING : a->max is %d\n", a->max);
 	i = 0;
+	while (i < a->len)
+	{
+		printf("%d ", arr[i]);
+		i++;
+	}
 
-	set_data(a, tmp);
-//	lstprint(a->bottom);
-//	printf("======\n");
-	free(tmp);
+	set_data(a, arr);
+
+	printf("\nSET DATA\n");
+	lstprint(a->bottom);
+
+	free(arr);
 }
 
 void	parsing(char **argv, t_stack *a)

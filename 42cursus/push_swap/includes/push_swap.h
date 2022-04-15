@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:06:50 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/14 20:28:54 by hannah           ###   ########.fr       */
+/*   Updated: 2022/04/15 15:53:18 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef struct s_list
 {
 	int				data;
+	int				idx;
 	struct s_list	*prev;
 	struct s_list	*next;
 }	t_list;

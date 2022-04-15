@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 13:18:25 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/13 21:24:17 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 16:08:10 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	lstadd_front(t_stack *stack, t_list *new_list)
 	}
 	new_list->prev = stack->top;
 	new_list->next = stack->bottom;
-
 	stack->bottom = new_list;
 	new_list->next->prev = new_list;
 	new_list->prev->next = new_list;
@@ -43,7 +42,6 @@ void	lstadd_back(t_stack *stack, t_list *new_list)
 	new_list->prev = stack->top;
 	new_list->next = stack->bottom;
 	stack->top = new_list;
-
 	new_list->next->prev = new_list;
 	new_list->prev->next = new_list;
 }
@@ -72,15 +70,14 @@ void	lstprint(t_list *top)
 		ptr = ptr->prev;
 	}
 	printf("%d\n", ptr->data);
-
 }
 
+// 지우기
 void	stackprint(t_stack *a, t_stack *b)
 {
 	printf("A : ");
 	lstprint(a->top);
 	printf("\n");
-
 	printf("B : ");
 	lstprint(b->top);
 	printf("\n\n");

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:06:24 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/15 14:58:05 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 16:23:00 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,15 @@ void	exit_msg()
 	exit(EXIT_FAILURE);
 }
 
-void	is_sorted(t_stack *a)		// 오름차순 (bottom 가 큰 값이어야 함)
+void	is_sorted(t_stack *a)
 {
 	t_list	*ptr;
 
 	ptr = a->bottom;
 	while (ptr != a->top && ptr->data > ptr->next->data)
 		ptr = ptr->next;
-	if (ptr == a->top)		// sorted
+	if (ptr == a->top)
 		exit(EXIT_SUCCESS);
-//		exit_msg();
 }
 
 void	precheck(t_stack *a)
@@ -35,10 +34,7 @@ void	precheck(t_stack *a)
 	t_list	*ptr;
 	t_list	*cmp;
 
-	// check sorted
 	is_sorted(a);
-
-	// check duplicated
 	ptr = a->bottom;
 	while (ptr->next != a->bottom)
 	{
@@ -62,20 +58,10 @@ int main(int argc, char *argv[])
 		exit_msg();
 	a = (t_stack *)ft_calloc(1, sizeof(t_stack));
 	b = (t_stack *)ft_calloc(1, sizeof(t_stack));
-
 	parsing(argv + 1, a);
 	precheck(a);
-
-	printf("\n\n<<Before Sort!>>\n");
-	stackprint(a, b);
-
 	sort(a, b);
-
-	printf("\n\n<<After Sort!>>\n");
-	stackprint(a, b);
-/// compress operation (optional)
 	free(a);
 	free(b);
-
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:48 by hannkim           #+#    #+#             */
-/*   Updated: 2022/04/15 15:55:17 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 16:10:18 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,10 @@ static void	set_data(t_stack *a, int *arr)
 	i = 0;
 	while (i < a->len)
 	{
-		printf("\n========arr[%d] : %d=======\n", i, arr[i]);
-
 		ptr = a->bottom;
 		while (ptr->data != arr[i])
-		{
-			printf("ptr->data : %d\n", ptr->data);
 			ptr = ptr->next;
-		}
-		printf("ptr->data : %d\n", ptr->data);
-		if (ptr)
 		ptr->idx = i;
-		printf("----PTR DATA %d---\n",  ptr->data);
 		i++;
 	}
 }
@@ -71,30 +63,8 @@ static void	quick_sort(int *arr, int start, int end)
 {
 	int q;
 
-//	int i = start;
-//	int j = 0;
-//	int k = end + 1;
-
 	if (start < end)
 	{
-//		printf("\n<<<Quick Sort : arr[%d] ~ arr[%d]>>>\n", start, end);
-//		while (j < start)
-//		{
-//			printf("%d ", arr[j]);
-//			j++;
-//		}
-//		while (i <= end)
-//		{
-//			printf("%d ", arr[i]);
-//			i++;
-//		}
-//		while (k <= 9)
-//		{
-//			printf("%d ", arr[k]);
-//			k++;
-//		}
-		printf("\n");
-
 		q = partition(arr, start, end);
 		quick_sort(arr, start, q - 1);
 		quick_sort(arr, q + 1, end);
@@ -116,22 +86,8 @@ static void	indexing(t_stack *a)
 		i++;
 		ptr = ptr->next;
 	}
-
 	quick_sort(arr, 0, a->max);
-
-	printf("INDEXING : a->max is %d\n", a->max);
-	i = 0;
-	while (i < a->len)
-	{
-		printf("%d ", arr[i]);
-		i++;
-	}
-
 	set_data(a, arr);
-
-	printf("\nSET DATA\n");
-	lstprint(a->bottom);
-
 	free(arr);
 }
 

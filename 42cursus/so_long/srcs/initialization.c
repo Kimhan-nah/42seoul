@@ -6,7 +6,7 @@
 /*   By: hannah <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 16:51:52 by hannah            #+#    #+#             */
-/*   Updated: 2022/03/03 07:52:13 by hannah           ###   ########.fr       */
+/*   Updated: 2022/04/24 18:22:04 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ static void	init_img(t_solong *solong)
 
 static void	init_map(char *file, t_solong *solong)
 {
-	unsigned int	i;
-
-	i = 0;
+//	unsigned int	i;
+//
+//	i = 0;
 	check_mapsize(file, solong);
 	solong->map = (char **)ft_calloc(sizeof(char *), solong->row);
 	if (!solong->map)

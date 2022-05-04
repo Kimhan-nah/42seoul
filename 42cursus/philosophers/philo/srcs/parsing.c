@@ -6,74 +6,40 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:09:34 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/04 15:28:19 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/04 17:25:05 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static int	check_lld(unsigned long long res, int sign)
+static void	initialize(t_philo *philo, t_info *info)
 {
-	if (res > 9223372036854775807)
+	int i;
+
+	i = 0;
+	while (i < info->philo_number)
 	{
-		if (sign > 0)
-			return (-1);
-		else
-			return (0);
+		philo[i].eat_cnt = info->eat_time;
+		philo[i].die_cnt = info->die_time;
+		philo[i].sleep_cnt = info->sleep_time;
+//		philo[i].info = info;
+		philo[i].index = i + 1;
+		i++;
 	}
-	return (res * sign);
 }
 
-static int	is_valid_ch(char ch)
+t_philo	*parsing(char **argv, t_info *info)
 {
-	if ((ch >= 9 && ch <= 13) || ch == 32)
-		return (1);
-	else if (ch == '+')
-		return (2);
-	else if (ch == '-')
-		return (3);
-	else if (ch >= '0' && ch <= '9')
-		return (4);
-	else
-		return (0);
-}
+	t_philo *philo;
 
-static int	ft_atoi(const char *s)
-{
-	char				*ptr;
-	unsigned long long	res;
-	int					sign;
-	int					count;
+	info->philo_number = ft_atoi(argv[1]);
+	info->die_time = ft_atoi(argv[2]);
+	info->eat_time = ft_atoi(argv[3]);
+	info->sleep_time = ft_atoi(argv[4]);
 
-	ptr = (char *)s;
-	res = 0;
-	sign = 1;
-	count = 0;
-	while (is_valid_ch(*ptr) == 1)
-		ptr++;
-	if (is_valid_ch(*ptr) == 2 || is_valid_ch(*ptr) == 3)
-	{
-		if (is_valid_ch(*ptr) == 3)
-			sign = -1;
-		ptr++;
-	}
-	while (is_valid_ch(*ptr) == 4 && count < 19)
-	{
-		res = res * 10 + (*ptr - '0');
-		ptr++;
-		count++;
-	}
-	res = check_lld(res, sign);
-	return (res);
-}
-
-void	parsing(char **argv)
-{
-	t_info *info;
-
-	info = (t_info *)ft_calloc(1, sizeof(t_info));
-	info->number_of_philo = ft_atoi(argv[1]);
-	info->time_to_die = ft_atoi(argv[2]);
-	info->time_to_eat = ft_atoi(argv[3]);
-	info->time_to_sleep = ft_atoi(argv[4]);
+	philo = (t_philo *)ft_calloc(info->philo_number, sizeof(t_philo));
+	if (!philo)
+		return (NULL);
+	initialize(philo, info);
+	return (philo);
 }

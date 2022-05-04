@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:56:18 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/04 18:07:34 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:37:37 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_info
 	int die_time;
 	int	eat_time;
 	int sleep_time;
+	int	must_eat;
+	int	alive;
 } t_info;
 
 typedef struct s_philo
@@ -36,10 +38,9 @@ typedef struct s_philo
 	int	die_cnt;
 	int	sleep_cnt;
 	int	index;
-
-//	t_info	*info;
-
+	t_info	*info;
 }	t_philo;
+
 
 t_philo	*parsing(char **argv, t_info *info);
 void	*ft_calloc(size_t count, size_t size);

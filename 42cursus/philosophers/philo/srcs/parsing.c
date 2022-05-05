@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:09:34 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/05 17:31:12 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/05 22:28:03 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	initialize(t_philo *philos, t_info *info)
 {
 	int i;
 	pthread_mutex_t	*fork;
+	pthread_mutex_t	*print;
 
 	i = 0;
 	while (i < info->philo_number)
@@ -23,17 +24,19 @@ static int	initialize(t_philo *philos, t_info *info)
 		fork = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
 		if (!fork)
 			return (FAILURE);
+//		pthread_mutex_init(fork, NULL);
 		if (pthread_mutex_init(fork, NULL))		// mutex 초기화
 			return (FAILURE);
 		philos[i].left = fork;
 		philos[(i + 1) % info->philo_number].right = fork;
-//		philos[i].eat_cnt = info->eat_time;
-//		philos[i].die_cnt = info->die_time;
-//		philos[i].sleep_cnt = info->sleep_time;
 		philos[i].info = info;
 		philos[i].index = i + 1;
 		i++;
 	}
+	print = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
+	if (pthread_mutex_init(print, NULL))		// mutex 초기화 에러 처리 해야 하는지?
+		return (FAILURE);
+	info->print = print;
 	return (SUCCESS);
 }
 

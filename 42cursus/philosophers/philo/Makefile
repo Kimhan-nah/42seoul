@@ -6,7 +6,7 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 14:54:52 by hannkim           #+#    #+#              #
-#    Updated: 2022/05/04 15:29:23 by hannkim          ###   ########.fr        #
+#    Updated: 2022/05/05 17:41:38 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ RM			= rm -f
 HEADERS 		= ./includes/
 SRCS_DIR		= ./srcs/
 
-SRC				= main.c parsing.c utils.c thread.c
+SRC				= main.c parsing.c utils.c thread.c action.c
 SRCS			= $(addprefix $(SRCS_DIR), $(SRC))
 OBJS 			= $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:04:34 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/04 18:08:16 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/05 12:54:10 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,22 @@ void	*ft_calloc(size_t count, size_t size)
 	return (mem);
 }
 
-//void	all_free(t_philo *philo, t_info *info)
-//{
-//}
+void *exit_free(t_philo *philo)
+{
+	t_philo	*ptr;
+	t_info	*info;
+
+	ptr = philo;
+	info = philo->info;
+	while (ptr)
+	{
+		if (ptr->left)
+			free(ptr->left);
+		if (ptr->right)
+			free(ptr->right);
+		ptr++;
+	}
+	free(philo);
+	free(info);
+	return (NULL);
+}

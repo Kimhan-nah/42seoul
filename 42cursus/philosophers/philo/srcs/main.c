@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:58:34 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/04 21:04:49 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/05 12:59:08 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,15 @@
 
 int	main(int argc, char *argv[])
 {
-	t_info *info;
 	t_philo	*philo;
 
-	if (argc != 5)
+	if (argc != 5 && argc != 6)
 		return (FAILURE);
-	info = (t_info *)ft_calloc(1, sizeof(t_info));
-	if (!info)
-		return (FAILURE);
-	philo = parsing(argv, info);
+	philo = parsing(argc, argv);
 	if (!philo)
-	{
-		free(info);
 		return (FAILURE);
-	}
-	if (generate_philo(philo, info) == FAILURE)
-	{
-		free(philo);
-		free(info);
+	if (born_philo(philo, philo->info) == FAILURE)
 		return (FAILURE);
-	}
 
 	// monitoring in main thread
 	monitoring_thread();

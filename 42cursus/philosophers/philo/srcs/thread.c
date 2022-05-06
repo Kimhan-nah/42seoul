@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:29:36 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/06 05:47:38 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/06 15:35:26 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,15 @@ void	monitoring_thread(t_philo *philos)
 	int	i;
 
 	i = 0;
-
-
 	while (stopwatch_ms(philos[i].last_eat) <= philos->info->die_time)
 	{
 		i = (i + 1) % philos->info->philo_number;
 		usleep(10);			// for 성능
 	}
-	printf("last_eat : %lld\n", philos[0].last_eat);		// last_eat 초기화되는 부분 
-	printf("stopwatch : %lld\n", stopwatch_ms(philos[i].last_eat));
-
-	// mutex 필요함
+	pthread_mutex_lock(philos->info->print);
 	philos->info->alive = 1;
-//	printf("%s%lldms %d died \033[0m\n", "\033[031m", stopwatch_ms(philos[i].last_eat), philos[i].index);
-	printf("%s%lldms %d died \033[0m\n", "\033[031m", stopwatch_ms(philos[i].timestamp), philos[i].index);
+	printf("%s%lldms %d died \033[0m\n", "\033[031m", stopwatch_ms(philos->info->start_time), philos[i].index);
+	pthread_mutex_unlock(philos->info->print);
 }
 
 /*
@@ -46,8 +41,6 @@ void	*born_philo(void *arg)
 	philo = (t_philo *)arg;		// casting
 	if (philo->index % 2 == 0)		// 짝수는 기다리고, 홀수 먼저 실행
 		usleep(50);
-	philo->timestamp = get_current_ms();
-//	philo->last_eat = get_current_ms();
 	while (!philo->info->alive)		// 살아있으면 계속 반복
 	{
 		go_eat(philo);
@@ -72,8 +65,11 @@ int	generate_philo(t_philo *philos, t_info *info)
 		exit_free(philos);
 		return (FAILURE);
 	}
+	info->start_time = get_current_ms();		// 시작 시간 저장
+	
 	while (i < info->philo_number)
 	{
+		philos[i].last_eat = info->start_time;
 		pthread_create(tid + i, NULL, born_philo, philos + i);
 		i++;
 	}

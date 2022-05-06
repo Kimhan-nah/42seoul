@@ -6,18 +6,18 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 17:41:56 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/06 05:47:15 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/06 16:17:09 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-long long	stopwatch_ms(long long timestamp)
+long long	stopwatch_ms(long long start_time)
 {
-	long long ms;
+	long long current;
 
-	ms = get_current_ms();
-	return (ms - timestamp);
+	current = get_current_ms();
+	return (current - start_time);
 }
 
 long long	get_current_ms()
@@ -32,16 +32,18 @@ long long	get_current_ms()
 
 void	print_state(t_philo *philo, int state)
 {
-	// alive 한지 확인 후 출력해야 함. 죽었으면 출력하면 안 되고 종료시켜야 함
 	pthread_mutex_lock(philo->info->print);
-	if (state == grabbing)
-		printf("%s%lldms %d has taken a fork\033[0m\n", "\033[34m", stopwatch_ms(philo->timestamp), philo->index);
-	else if (state == eating)
-		printf("%s%lldms %d is eating\033[0m\n", "\033[32m", stopwatch_ms(philo->timestamp), philo->index);
-	else if (state == sleeping)
-		printf("%s%lldms %d is sleeping\033[0m\n", "\033[33m", stopwatch_ms(philo->timestamp), philo->index);
-	else if (state == thinking)
-		printf("%s%lldms %d is thinking\033[0m\n", "\033[35m", stopwatch_ms(philo->timestamp), philo->index);
+	if (philo->info->alive == 0)
+	{
+		if (state == grabbing)
+			printf("%s%lldms %d has taken a fork\033[0m\n", "\033[34m", stopwatch_ms(philo->info->start_time), philo->index);
+		else if (state == eating)
+			printf("%s%lldms %d is eating\033[0m\n", "\033[32m", stopwatch_ms(philo->info->start_time), philo->index);
+		else if (state == sleeping)
+			printf("%s%lldms %d is sleeping\033[0m\n", "\033[33m", stopwatch_ms(philo->info->start_time), philo->index);
+		else if (state == thinking)
+			printf("%s%lldms %d is thinking\033[0m\n", "\033[35m", stopwatch_ms(philo->info->start_time), philo->index);
+	}
 	pthread_mutex_unlock(philo->info->print);
 }
 

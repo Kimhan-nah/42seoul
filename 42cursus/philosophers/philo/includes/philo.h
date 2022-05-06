@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:56:18 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/06 02:04:09 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/06 15:34:46 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_info
 	int				eat_time;
 	int				sleep_time;
 	int				must_eat;
+	long long		start_time;
 	int				alive;		// for die
 
 	pthread_mutex_t	*print;
@@ -48,7 +49,6 @@ typedef struct s_philo
 	int				index;
 	long long		last_eat;
 	long long		last_sleep;
-	long long		timestamp;
 
 	t_info			*info;
 	pthread_mutex_t	*left;

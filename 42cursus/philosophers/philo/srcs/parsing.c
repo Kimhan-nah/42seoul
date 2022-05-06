@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:09:34 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/05 22:28:03 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/06 15:35:35 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static int	initialize(t_philo *philos, t_info *info)
 		fork = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
 		if (!fork)
 			return (FAILURE);
-//		pthread_mutex_init(fork, NULL);
 		if (pthread_mutex_init(fork, NULL))		// mutex 초기화
 			return (FAILURE);
 		philos[i].left = fork;

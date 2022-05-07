@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:09:34 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/06 21:37:53 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/07 20:21:57 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	initialize(t_philo *philos, t_info *info)
 	print = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
 	if (pthread_mutex_init(print, NULL))		// mutex 초기화 에러 처리 해야 하는지?
 		return (FAILURE);
-	info->print = print;
+	info->mutex = print;
 	return (SUCCESS);
 }
 
@@ -54,7 +54,7 @@ t_philo	*parsing(int argc, char **argv)
 	if (argc == 6)
 	{
 		info->must_eat = ft_atoi(argv[5]);
-		info->check_must_eat = (t_bool *)ft_calloc(info->philo_number, sizeof(t_bool));
+		info->is_finish = (t_bool *)ft_calloc(info->philo_number, sizeof(t_bool));
 	}
 	else
 		info->must_eat = -1;

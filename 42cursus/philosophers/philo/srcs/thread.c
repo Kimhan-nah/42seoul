@@ -6,23 +6,30 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:29:36 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/07 10:03:48 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/07 20:39:06 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-t_bool	check_must_eat(t_philo *philo, t_info *info)
+t_bool	is_finish(t_philo *philo, t_info *info)
 {
-	if (info->check_must_eat[philo->index - 1] == false)
+	if (info->must_eat == -1)
+		return (false);
+	if (info->is_finish[philo->index - 1] == false)
 	{
 		if (philo->count_eat >= info->must_eat)
 		{
-			info->check_must_eat[philo->index - 1] = true;
+			pthread_mutex_lock(info->mutex);
+			info->is_finish[philo->index - 1] = true;
 			info->count_must_eat++;
+			pthread_mutex_unlock(info->mutex);
 		}
 		if (info->count_must_eat == info->philo_number)
+		{
+			info->alive = 2;
 			return (true);
+		}
 	}
 	return (false);
 }
@@ -33,21 +40,27 @@ t_bool	check_must_eat(t_philo *philo, t_info *info)
 void	monitoring_thread(t_philo *philos, t_info *info)
 {
 	int	i;
+	long long tmp;
+	t_bool finished;;
 
 	i = 0;
-	while (stopwatch_ms(philos[i].last_eat) <= info->die_time)
+	while ((tmp = stopwatch_ms(philos[i].last_eat)) <= info->die_time)
 	{
-//		if (info->must_eat != -1 && check_must_eat(philos + i, philos->info) == true)
-//		{
-//			return ;
-//		}
+		finished = is_finish(philos + i,info);
+		if (finished == true)
+			return ;
 		i = (i + 1) % info->philo_number;
-		usleep(10);			// for 성능
+		usleep(100);			// for 성능
 	}
-	pthread_mutex_lock(info->print);
-	info->alive = 1;
-	printf("%s%lldms %d died \033[0m\n", "\033[031m", stopwatch_ms(info->start_time), philos[i].index);
-	pthread_mutex_unlock(info->print);
+	pthread_mutex_lock(info->mutex);
+	if (finished != false)
+		printf("must eat !!!!!!\n");
+	else
+	{
+		info->alive = 1; 
+		printf("%s%lldms %d died \033[0m\n", "\033[031m", stopwatch_ms(info->start_time), philos[i].index);
+	}
+	pthread_mutex_unlock(info->mutex);
 }
 
 /*
@@ -59,14 +72,11 @@ void	*born_philo(void *arg)
 
 	philo = (t_philo *)arg;		// casting
 	if (philo->index % 2 == 0)		// 짝수는 기다리고, 홀수 먼저 실행
-		usleep(50);
-	while (!philo->info->alive || check_must_eat(philo, philo->info) == false)		// 살아있으면 계속 반복
+		usleep(philo->info->eat_time / 2);
+	while (!philo->info->alive)		// 살아있으면 계속 반복
 	{
 		go_eat(philo);
 		go_sleep(philo);
-	}
-	if (check_must_eat(philo, philo->info) == true)
-	{
 	}
 	return NULL;
 }
@@ -114,7 +124,7 @@ int	generate_philo(t_philo *philos, t_info *info)
 		pthread_mutex_destroy(philos[i].left);
 		i++;
 	}
-	pthread_mutex_destroy(info->print);
+	pthread_mutex_destroy(info->mutex);
 
 	// free memory
 	free(tid);

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 17:41:56 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/06 16:44:40 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/07 20:23:44 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,40 +30,42 @@ long long	get_current_ms()
 	return (current);
 }
 
-void	print_state(t_philo *philo, int state)
+void	print_state(t_philo *philo, t_info *info, int state)
 {
-	pthread_mutex_lock(philo->info->print);
-	if (philo->info->alive == 0)
+	pthread_mutex_lock(info->mutex);
+	if (info->alive == 0)
 	{
 		if (state == grabbing)
-			printf("%s%lldms %d has taken a fork\033[0m\n", "\033[34m", stopwatch_ms(philo->info->start_time), philo->index);
+			printf("%s%lldms %d has taken a fork\033[0m\n", "\033[34m", stopwatch_ms(info->start_time), philo->index);
 		else if (state == eating)
-			printf("%s%lldms %d is eating\033[0m\n", "\033[32m", stopwatch_ms(philo->info->start_time), philo->index);
+			printf("%s%lldms %d is eating\033[0m\n", "\033[32m", stopwatch_ms(info->start_time), philo->index);
 		else if (state == sleeping)
-			printf("%s%lldms %d is sleeping\033[0m\n", "\033[33m", stopwatch_ms(philo->info->start_time), philo->index);
+			printf("%s%lldms %d is sleeping\033[0m\n", "\033[33m", stopwatch_ms(info->start_time), philo->index);
 		else if (state == thinking)
-			printf("%s%lldms %d is thinking\033[0m\n", "\033[35m", stopwatch_ms(philo->info->start_time), philo->index);
+			printf("%s%lldms %d is thinking\033[0m\n", "\033[35m", stopwatch_ms(info->start_time), philo->index);
 	}
-	pthread_mutex_unlock(philo->info->print);
+	pthread_mutex_unlock(info->mutex);
 }
 
 void	go_eat(t_philo *philo)
 {
 	// 1. left fork lock
 	pthread_mutex_lock(philo->left);
-	print_state(philo, grabbing);
+	print_state(philo, philo->info, grabbing);
 
 	// 2. right fork lock
 	pthread_mutex_lock(philo->right);
-	print_state(philo, grabbing);
+	print_state(philo, philo->info, grabbing);
 
 	// 3. print
-	print_state(philo, eating);
+	print_state(philo, philo->info, eating);
 
 	// 4. eating
 	philo->last_eat = get_current_ms();
+	pthread_mutex_lock(philo->info->mutex);
 	(philo->count_eat)++;
-	while (stopwatch_ms(philo->last_eat) <= philo->info->eat_time)
+	pthread_mutex_unlock(philo->info->mutex);
+	while (!philo->info->alive && stopwatch_ms(philo->last_eat) <= philo->info->eat_time)
 		usleep(20);		// 무한루프로 인한 성능 저하 막기 위함 (spin lock의 단점)
 
 	// 5. left fork unlock
@@ -74,12 +76,12 @@ void	go_eat(t_philo *philo)
 
 void	go_sleep(t_philo *philo)
 {
-	print_state(philo, sleeping);
+	print_state(philo, philo->info, sleeping);
 
 	philo->last_sleep = get_current_ms();		// 자기 시작한 시간 저장
-	while (stopwatch_ms(philo->last_sleep) <= philo->info->sleep_time)
+	while (!philo->info->alive && stopwatch_ms(philo->last_sleep) <= philo->info->sleep_time)
 		usleep(20);
 	// print
-	print_state(philo, thinking);
+	print_state(philo, philo->info, thinking);
 }
 

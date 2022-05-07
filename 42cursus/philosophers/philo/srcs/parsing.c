@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:09:34 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/06 15:35:35 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/06 21:37:53 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,12 @@ t_philo	*parsing(int argc, char **argv)
 	info->eat_time = ft_atoi(argv[3]);
 	info->sleep_time = ft_atoi(argv[4]);
 	if (argc == 6)
+	{
 		info->must_eat = ft_atoi(argv[5]);
+		info->check_must_eat = (t_bool *)ft_calloc(info->philo_number, sizeof(t_bool));
+	}
+	else
+		info->must_eat = -1;
 
 	philos = (t_philo *)ft_calloc(info->philo_number, sizeof(t_philo));
 	if (!philos)		// info free 해야 함

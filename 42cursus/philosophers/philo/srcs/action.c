@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 17:41:56 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/06 16:17:09 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/06 16:44:40 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	go_eat(t_philo *philo)
 
 	// 4. eating
 	philo->last_eat = get_current_ms();
+	(philo->count_eat)++;
 	while (stopwatch_ms(philo->last_eat) <= philo->info->eat_time)
 		usleep(20);		// 무한루프로 인한 성능 저하 막기 위함 (spin lock의 단점)
 

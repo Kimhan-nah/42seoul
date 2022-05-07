@@ -6,29 +6,48 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:29:36 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/06 15:35:26 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/07 10:03:48 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+t_bool	check_must_eat(t_philo *philo, t_info *info)
+{
+	if (info->check_must_eat[philo->index - 1] == false)
+	{
+		if (philo->count_eat >= info->must_eat)
+		{
+			info->check_must_eat[philo->index - 1] = true;
+			info->count_must_eat++;
+		}
+		if (info->count_must_eat == info->philo_number)
+			return (true);
+	}
+	return (false);
+}
+
 /*
  * 모든 스레드가 살아있는 지 확인하고 죽은 스레드가 있으면 종료시켜야 함
  */
-void	monitoring_thread(t_philo *philos)
+void	monitoring_thread(t_philo *philos, t_info *info)
 {
 	int	i;
 
 	i = 0;
-	while (stopwatch_ms(philos[i].last_eat) <= philos->info->die_time)
+	while (stopwatch_ms(philos[i].last_eat) <= info->die_time)
 	{
-		i = (i + 1) % philos->info->philo_number;
+//		if (info->must_eat != -1 && check_must_eat(philos + i, philos->info) == true)
+//		{
+//			return ;
+//		}
+		i = (i + 1) % info->philo_number;
 		usleep(10);			// for 성능
 	}
-	pthread_mutex_lock(philos->info->print);
-	philos->info->alive = 1;
-	printf("%s%lldms %d died \033[0m\n", "\033[031m", stopwatch_ms(philos->info->start_time), philos[i].index);
-	pthread_mutex_unlock(philos->info->print);
+	pthread_mutex_lock(info->print);
+	info->alive = 1;
+	printf("%s%lldms %d died \033[0m\n", "\033[031m", stopwatch_ms(info->start_time), philos[i].index);
+	pthread_mutex_unlock(info->print);
 }
 
 /*
@@ -41,10 +60,13 @@ void	*born_philo(void *arg)
 	philo = (t_philo *)arg;		// casting
 	if (philo->index % 2 == 0)		// 짝수는 기다리고, 홀수 먼저 실행
 		usleep(50);
-	while (!philo->info->alive)		// 살아있으면 계속 반복
+	while (!philo->info->alive || check_must_eat(philo, philo->info) == false)		// 살아있으면 계속 반복
 	{
 		go_eat(philo);
 		go_sleep(philo);
+	}
+	if (check_must_eat(philo, philo->info) == true)
+	{
 	}
 	return NULL;
 }
@@ -75,11 +97,11 @@ int	generate_philo(t_philo *philos, t_info *info)
 	}
 
 	// 철학자 먹고 잘 동안 기다리기
-	monitoring_thread(philos);
+	monitoring_thread(philos, philos->info);
 
 	// 종료된 철학자 스레드 기다렸다가 조인
 	i = 0;
-	while (i < philos->info->philo_number)
+	while (i < info->philo_number)
 	{
 		pthread_join(tid[i], NULL);
 		i++;

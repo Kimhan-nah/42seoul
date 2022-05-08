@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 17:41:56 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/08 12:20:38 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/08 16:31:30 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,5 @@ void	go_sleep(t_philo *philo, t_info *info)
 	while (!info->alive && stopwatch_ms(philo->last_sleep) <= info->sleep_time)
 		usleep(500);
 	print_state(philo, info, thinking);
-//	usleep(50);
 }
 

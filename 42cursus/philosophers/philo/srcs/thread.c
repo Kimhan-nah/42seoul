@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:29:36 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/08 11:38:39 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/08 19:48:45 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	*born_philo(void *arg)
 	// 철학자 다 만들어졌을 경우에만 실행!!!
 	philo = (t_philo *)arg;
 	if (philo->index % 2 == 0)
-		usleep(philo->info->eat_time / 2);
+		usleep(philo->info->eat_time * 500);
 	while (!philo->info->alive)
 	{
 		go_eat(philo, philo->info);
@@ -95,15 +95,11 @@ int	generate_philo(t_philo *philos, t_info *info)
 	info->start_time = get_current_ms();
 	while (i < info->philo_number)
 	{
-		// thread 컴파일 옵션 알아보기
 		pthread_mutex_lock(info->mutex);
 		philos[i].last_eat = info->start_time;
-		pthread_create(tid + i, NULL, born_philo, philos + i);
-//		if (pthread_create(tid + i, NULL, born_philo, philos + i))		// error 처리 (도중에 에러 ->)
-//		if (pthread_create(tid + i, NULL, born_philo, philos + i))		// error 처리 (도중에 에러 ->)
-//		{
-//
-//		}
+		if (pthread_create(tid + i, NULL, born_philo, philos + i))
+		{
+		}
 		i++;
 		pthread_mutex_unlock(info->mutex);
 	}

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:29:36 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/08 19:48:45 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/08 20:36:23 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ t_bool	is_finish(t_philo *philo, t_info *info)
 void	monitoring_thread(t_philo *philos, t_info *info)
 {
 	int			i;
-	long long	tmp;
 	t_bool		finished;;
 
 	i = 0;
-	while ((tmp = stopwatch_ms(philos[i].last_eat)) <= info->die_time)
+	while (stopwatch_ms(philos[i].last_eat) <= info->die_time)
 	{
 		finished = is_finish(philos + i,info);
 		if (finished == true)
@@ -57,8 +56,7 @@ void	monitoring_thread(t_philo *philos, t_info *info)
 	else
 	{
 		info->alive = 1; 
-		printf("last eat : %lld, stopwatch : %lld\n", philos[i].last_eat, tmp);
-		printf("%s%lldms %d died \033[0m\n", "\033[031m", stopwatch_ms(info->start_time), philos[i].index);
+		printf("%s%lld %d died \033[0m\n", "\033[031m", stopwatch_ms(info->start_time), philos[i].index);
 	}
 	pthread_mutex_unlock(info->mutex);
 }
@@ -67,11 +65,11 @@ void	*born_philo(void *arg)
 {
 	t_philo *philo;
 
-	// thread 생성하닥 오류 났을 경우에 바로 종료시키기
-	// 철학자 다 만들어졌을 경우에만 실행!!!
+	// 스레드가 모두 생성된 경우에만 진행
+	
 	philo = (t_philo *)arg;
 	if (philo->index % 2 == 0)
-		usleep(philo->info->eat_time * 500);
+		usleep(philo->info->eat_time * 500);		// usleep(microseconds), info->eat_time : milisecocnds
 	while (!philo->info->alive)
 	{
 		go_eat(philo, philo->info);
@@ -98,8 +96,7 @@ int	generate_philo(t_philo *philos, t_info *info)
 		pthread_mutex_lock(info->mutex);
 		philos[i].last_eat = info->start_time;
 		if (pthread_create(tid + i, NULL, born_philo, philos + i))
-		{
-		}
+			return thread_error();
 		i++;
 		pthread_mutex_unlock(info->mutex);
 	}

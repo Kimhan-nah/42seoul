@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:09:34 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/08 09:54:36 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/08 20:34:59 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static int	initialize(t_philo *philos, t_info *info)
 {
 	int				i;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	*mutex;
 
 	i = 0;
 	while (i < info->philo_number)
@@ -32,10 +31,8 @@ static int	initialize(t_philo *philos, t_info *info)
 		philos[i].index = i + 1;
 		i++;
 	}
-	mutex = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
-	if (pthread_mutex_init(mutex, NULL))
+	if (pthread_mutex_init(info->mutex, NULL))
 		return (FAILURE);
-	info->mutex = mutex;
 	return (SUCCESS);
 }
 
@@ -58,6 +55,7 @@ t_philo	*parsing(int argc, char **argv)
 	}
 	else
 		info->must_eat = -1;
+	// check_valid
 	philos = (t_philo *)ft_calloc(info->philo_number, sizeof(t_philo));
 	if (!philos)
 	{

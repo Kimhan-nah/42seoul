@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:56:18 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/08 10:00:19 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/08 20:30:56 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_info
 	int				alive;		// for die
 	t_bool			*is_finish;
 	int				count_must_eat;
+	pthread_mutex_t	*print;
 	pthread_mutex_t	*mutex;
 }	t_info;
 
@@ -73,5 +74,6 @@ void		go_eat(t_philo *philo, t_info *info);
 void		go_sleep(t_philo *philo, t_info *info);
 long long	get_current_ms();
 long long	stopwatch_ms(long long timestamp);
+int			thread_error();
 
 #endif

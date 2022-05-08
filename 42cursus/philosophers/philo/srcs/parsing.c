@@ -6,11 +6,16 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:09:34 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/08 20:34:59 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/08 22:16:39 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+static t_bool	is_valid(t_info *info)
+{
+	return (true);
+}
 
 static int	initialize(t_philo *philos, t_info *info)
 {
@@ -31,6 +36,8 @@ static int	initialize(t_philo *philos, t_info *info)
 		philos[i].index = i + 1;
 		i++;
 	}
+	if (pthread_mutex_init(info->print, NULL))
+		return (FAILURE);
 	if (pthread_mutex_init(info->mutex, NULL))
 		return (FAILURE);
 	return (SUCCESS);
@@ -55,7 +62,8 @@ t_philo	*parsing(int argc, char **argv)
 	}
 	else
 		info->must_eat = -1;
-	// check_valid
+	if (is_valid(info) == false)
+		return (NULL);
 	philos = (t_philo *)ft_calloc(info->philo_number, sizeof(t_philo));
 	if (!philos)
 	{

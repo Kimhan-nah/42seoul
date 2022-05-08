@@ -6,7 +6,7 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 14:54:52 by hannkim           #+#    #+#              #
-#    Updated: 2022/05/08 20:13:13 by hannah           ###   ########.fr        #
+#    Updated: 2022/05/08 22:11:53 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ endif
 AR			= ar rcs
 RM			= rm -f
 
-
 HEADERS 		= ./includes/
 SRCS_DIR		= ./srcs/
 
@@ -28,10 +27,8 @@ SRC				= main.c parsing.c utils.c thread.c action.c error.c
 SRCS			= $(addprefix $(SRCS_DIR), $(SRC))
 OBJS 			= $(SRCS:.c=.o)
 
-
 .c.o:
 	$(CC) $(CFLAGS) -I $(HEADERS) -o $@ -c $?
-
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I $(HEADERS)

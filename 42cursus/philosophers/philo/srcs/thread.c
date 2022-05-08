@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:29:36 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/08 20:36:23 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/08 22:00:40 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,14 @@ void	monitoring_thread(t_philo *philos, t_info *info)
 		i = (i + 1) % info->philo_number;
 		usleep(500);
 	}
-	pthread_mutex_lock(info->mutex);
-	if (finished != false)
-		printf("must eat !!!!!!\n");
-	else
+	pthread_mutex_lock(info->print);
+	if (finished == false)
 	{
 		info->alive = 1; 
-		printf("%s%lld %d died \033[0m\n", "\033[031m", stopwatch_ms(info->start_time), philos[i].index);
+		printf("%s%lld %d died \033[0m\n",\
+				"\033[031m", stopwatch_ms(info->start_time), philos[i].index);
 	}
-	pthread_mutex_unlock(info->mutex);
+	pthread_mutex_unlock(info->print);
 }
 
 void	*born_philo(void *arg)
@@ -69,13 +68,36 @@ void	*born_philo(void *arg)
 	
 	philo = (t_philo *)arg;
 	if (philo->index % 2 == 0)
-		usleep(philo->info->eat_time * 500);		// usleep(microseconds), info->eat_time : milisecocnds
+		usleep(philo->info->eat_time * 500);
 	while (!philo->info->alive)
 	{
 		go_eat(philo, philo->info);
 		go_sleep(philo, philo->info);
 	}
 	return NULL;
+}
+
+void	free_resources(pthread_t *tid, t_philo *philos, t_info *info, int tid_index)
+{
+	int	i;
+
+	i = 0;
+	while (i < tid_index)
+	{
+		pthread_join(tid[i], NULL);
+		i++;
+	}
+	i = 0;
+	while (i < info->philo_number)
+	{
+		pthread_mutex_destroy(philos[i].left);
+		i++;
+	}
+	pthread_mutex_destroy(info->print);
+	pthread_mutex_destroy(info->mutex);
+	free(tid);
+	free(info);
+	free(philos);
 }
 
 int	generate_philo(t_philo *philos, t_info *info)
@@ -96,26 +118,14 @@ int	generate_philo(t_philo *philos, t_info *info)
 		pthread_mutex_lock(info->mutex);
 		philos[i].last_eat = info->start_time;
 		if (pthread_create(tid + i, NULL, born_philo, philos + i))
-			return thread_error();
+		{
+			free_resources(tid, philos, info, i);
+			return (FAILURE);
+		}
 		i++;
 		pthread_mutex_unlock(info->mutex);
 	}
 	monitoring_thread(philos, philos->info);
-	i = 0;
-	while (i < info->philo_number)
-	{
-		pthread_join(tid[i], NULL);
-		i++;
-	}
-	i = 0;
-	while (i < info->philo_number)
-	{
-		pthread_mutex_destroy(philos[i].left);
-		i++;
-	}
-	pthread_mutex_destroy(info->mutex);
-	free(tid);
-	free(info);
-	free(philos);
+	free_resources(tid, philos, info, info->philo_number);
 	return (SUCCESS);
 }

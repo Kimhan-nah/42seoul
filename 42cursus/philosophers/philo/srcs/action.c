@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 17:41:56 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/08 20:31:11 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/08 20:55:22 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,17 @@ void	print_state(t_philo *philo, t_info *info, int state)
 	if (info->alive == 0)
 	{
 		if (state == grabbing)
-			printf("%s%lld %d has taken a fork\033[0m\n", "\033[34m", stopwatch_ms(info->start_time), philo->index);
+			printf("%s%lld %d has taken a fork\033[0m\n",\
+					"\033[34m", stopwatch_ms(info->start_time), philo->index);
 		else if (state == eating)
-			printf("%s%lld %d is eating\033[0m\n", "\033[32m", stopwatch_ms(info->start_time), philo->index);
+			printf("%s%lld %d is eating\033[0m\n",\
+					"\033[32m", stopwatch_ms(info->start_time), philo->index);
 		else if (state == sleeping)
-			printf("%s%lld %d is sleeping\033[0m\n", "\033[33m", stopwatch_ms(info->start_time), philo->index);
+			printf("%s%lld %d is sleeping\033[0m\n",\
+					"\033[33m", stopwatch_ms(info->start_time), philo->index);
 		else if (state == thinking)
-			printf("%s%lld %d is thinking\033[0m\n", "\033[35m", stopwatch_ms(info->start_time), philo->index);
+			printf("%s%lld %d is thinking\033[0m\n",\
+					"\033[35m", stopwatch_ms(info->start_time), philo->index);
 	}
 	pthread_mutex_unlock(info->print);
 }
@@ -55,11 +59,12 @@ void	go_eat(t_philo *philo, t_info *info)
 	pthread_mutex_lock(philo->right);
 	print_state(philo, info, grabbing);
 	print_state(philo, info, eating);
-	philo->last_eat = get_current_ms();
 
 	pthread_mutex_lock(info->mutex);
+	philo->last_eat = get_current_ms();
 	(philo->count_eat)++;
 	pthread_mutex_unlock(info->mutex);
+
 	while (!info->alive && stopwatch_ms(philo->last_eat) <= info->eat_time)
 		usleep(500);
 	pthread_mutex_unlock(philo->left);

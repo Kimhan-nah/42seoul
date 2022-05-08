@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:29:36 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/07 20:39:06 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/08 11:38:39 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,20 @@ t_bool	is_finish(t_philo *philo, t_info *info)
 		}
 		if (info->count_must_eat == info->philo_number)
 		{
+			pthread_mutex_lock(info->mutex);
 			info->alive = 2;
+			pthread_mutex_unlock(info->mutex);
 			return (true);
 		}
 	}
 	return (false);
 }
 
-/*
- * 모든 스레드가 살아있는 지 확인하고 죽은 스레드가 있으면 종료시켜야 함
- */
 void	monitoring_thread(t_philo *philos, t_info *info)
 {
-	int	i;
-	long long tmp;
-	t_bool finished;;
+	int			i;
+	long long	tmp;
+	t_bool		finished;;
 
 	i = 0;
 	while ((tmp = stopwatch_ms(philos[i].last_eat)) <= info->die_time)
@@ -50,7 +49,7 @@ void	monitoring_thread(t_philo *philos, t_info *info)
 		if (finished == true)
 			return ;
 		i = (i + 1) % info->philo_number;
-		usleep(100);			// for 성능
+		usleep(500);
 	}
 	pthread_mutex_lock(info->mutex);
 	if (finished != false)
@@ -58,33 +57,29 @@ void	monitoring_thread(t_philo *philos, t_info *info)
 	else
 	{
 		info->alive = 1; 
+		printf("last eat : %lld, stopwatch : %lld\n", philos[i].last_eat, tmp);
 		printf("%s%lldms %d died \033[0m\n", "\033[031m", stopwatch_ms(info->start_time), philos[i].index);
 	}
 	pthread_mutex_unlock(info->mutex);
 }
 
-/*
- * 스레드 함수 : eat, sleep, thinkg 반복
- */
 void	*born_philo(void *arg)
 {
 	t_philo *philo;
 
-	philo = (t_philo *)arg;		// casting
-	if (philo->index % 2 == 0)		// 짝수는 기다리고, 홀수 먼저 실행
+	// thread 생성하닥 오류 났을 경우에 바로 종료시키기
+	// 철학자 다 만들어졌을 경우에만 실행!!!
+	philo = (t_philo *)arg;
+	if (philo->index % 2 == 0)
 		usleep(philo->info->eat_time / 2);
-	while (!philo->info->alive)		// 살아있으면 계속 반복
+	while (!philo->info->alive)
 	{
-		go_eat(philo);
-		go_sleep(philo);
+		go_eat(philo, philo->info);
+		go_sleep(philo, philo->info);
 	}
 	return NULL;
 }
 
-/*
- * philosopher 스레드 생성
- * 철학자 eat, sleep, think하는 동안 기다렸다가 스레드 종료
- */
 int	generate_philo(t_philo *philos, t_info *info)
 {
 	int i;
@@ -97,27 +92,28 @@ int	generate_philo(t_philo *philos, t_info *info)
 		exit_free(philos);
 		return (FAILURE);
 	}
-	info->start_time = get_current_ms();		// 시작 시간 저장
-	
+	info->start_time = get_current_ms();
 	while (i < info->philo_number)
 	{
+		// thread 컴파일 옵션 알아보기
+		pthread_mutex_lock(info->mutex);
 		philos[i].last_eat = info->start_time;
 		pthread_create(tid + i, NULL, born_philo, philos + i);
+//		if (pthread_create(tid + i, NULL, born_philo, philos + i))		// error 처리 (도중에 에러 ->)
+//		if (pthread_create(tid + i, NULL, born_philo, philos + i))		// error 처리 (도중에 에러 ->)
+//		{
+//
+//		}
 		i++;
+		pthread_mutex_unlock(info->mutex);
 	}
-
-	// 철학자 먹고 잘 동안 기다리기
 	monitoring_thread(philos, philos->info);
-
-	// 종료된 철학자 스레드 기다렸다가 조인
 	i = 0;
 	while (i < info->philo_number)
 	{
 		pthread_join(tid[i], NULL);
 		i++;
 	}
-	
-	// mutex_destroy -> 사용한 자원 해제
 	i = 0;
 	while (i < info->philo_number)
 	{
@@ -125,11 +121,8 @@ int	generate_philo(t_philo *philos, t_info *info)
 		i++;
 	}
 	pthread_mutex_destroy(info->mutex);
-
-	// free memory
 	free(tid);
 	free(info);
 	free(philos);
-
 	return (SUCCESS);
 }

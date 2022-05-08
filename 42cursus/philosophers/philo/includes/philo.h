@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:56:18 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/07 20:36:13 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/08 10:00:19 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void		*ft_calloc(size_t count, size_t size);
 int			ft_atoi(const char *s);
 int			generate_philo(t_philo *philos, t_info *info);
 void		monitoring_thread(t_philo *philos, t_info *info);
-void		go_eat(t_philo *philo);
-void		go_sleep(t_philo *philo);
+void		go_eat(t_philo *philo, t_info *info);
+void		go_sleep(t_philo *philo, t_info *info);
 long long	get_current_ms();
 long long	stopwatch_ms(long long timestamp);
 

@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 17:41:56 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/07 20:23:44 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/08 12:20:38 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 long long	stopwatch_ms(long long start_time)
 {
-	long long current;
+	long long	current;
 
 	current = get_current_ms();
 	return (current - start_time);
@@ -47,41 +47,30 @@ void	print_state(t_philo *philo, t_info *info, int state)
 	pthread_mutex_unlock(info->mutex);
 }
 
-void	go_eat(t_philo *philo)
+void	go_eat(t_philo *philo, t_info *info)
 {
-	// 1. left fork lock
 	pthread_mutex_lock(philo->left);
-	print_state(philo, philo->info, grabbing);
-
-	// 2. right fork lock
+	print_state(philo, info, grabbing);
 	pthread_mutex_lock(philo->right);
-	print_state(philo, philo->info, grabbing);
-
-	// 3. print
-	print_state(philo, philo->info, eating);
-
-	// 4. eating
+	print_state(philo, info, grabbing);
+	print_state(philo, info, eating);
 	philo->last_eat = get_current_ms();
-	pthread_mutex_lock(philo->info->mutex);
+	pthread_mutex_lock(info->mutex);
 	(philo->count_eat)++;
-	pthread_mutex_unlock(philo->info->mutex);
-	while (!philo->info->alive && stopwatch_ms(philo->last_eat) <= philo->info->eat_time)
-		usleep(20);		// 무한루프로 인한 성능 저하 막기 위함 (spin lock의 단점)
-
-	// 5. left fork unlock
+	pthread_mutex_unlock(info->mutex);
+	while (!info->alive && stopwatch_ms(philo->last_eat) <= info->eat_time)
+		usleep(500);
 	pthread_mutex_unlock(philo->left);
-	// 6. right fork unlock
 	pthread_mutex_unlock(philo->right);
 }
 
-void	go_sleep(t_philo *philo)
+void	go_sleep(t_philo *philo, t_info *info)
 {
-	print_state(philo, philo->info, sleeping);
-
-	philo->last_sleep = get_current_ms();		// 자기 시작한 시간 저장
-	while (!philo->info->alive && stopwatch_ms(philo->last_sleep) <= philo->info->sleep_time)
-		usleep(20);
-	// print
-	print_state(philo, philo->info, thinking);
+	print_state(philo, info, sleeping);
+	philo->last_sleep = get_current_ms();
+	while (!info->alive && stopwatch_ms(philo->last_sleep) <= info->sleep_time)
+		usleep(500);
+	print_state(philo, info, thinking);
+//	usleep(50);
 }
 

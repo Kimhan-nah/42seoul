@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 17:41:56 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/08 20:55:22 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/09 22:10:10 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ long long	get_current_ms()
 
 void	print_state(t_philo *philo, t_info *info, int state)
 {
-	pthread_mutex_lock(info->print);
+//	pthread_mutex_lock(info->mutex);
 	if (info->alive == 0)
 	{
 		if (state == grabbing)
@@ -48,7 +48,7 @@ void	print_state(t_philo *philo, t_info *info, int state)
 			printf("%s%lld %d is thinking\033[0m\n",\
 					"\033[35m", stopwatch_ms(info->start_time), philo->index);
 	}
-	pthread_mutex_unlock(info->print);
+//	pthread_mutex_unlock(info->mutex);
 }
 
 void	go_eat(t_philo *philo, t_info *info)
@@ -57,27 +57,33 @@ void	go_eat(t_philo *philo, t_info *info)
 	print_state(philo, info, grabbing);
 
 	pthread_mutex_lock(philo->right);
+
 	print_state(philo, info, grabbing);
-	print_state(philo, info, eating);
 
 	pthread_mutex_lock(info->mutex);
+	print_state(philo, info, eating);
+
 	philo->last_eat = get_current_ms();
-	(philo->count_eat)++;
 	pthread_mutex_unlock(info->mutex);
 
-	while (!info->alive && stopwatch_ms(philo->last_eat) <= info->eat_time)
+//	while (!info->alive && stopwatch_ms(philo->last_eat) <= info->eat_time)
+	while (stopwatch_ms(philo->last_eat) <= info->eat_time)
 		usleep(500);
+	pthread_mutex_lock(info->mutex);
+	(philo->count_eat)++;
+	pthread_mutex_unlock(info->mutex);
 	pthread_mutex_unlock(philo->left);
 	pthread_mutex_unlock(philo->right);
 }
 
 void	go_sleep(t_philo *philo, t_info *info)
 {
-	print_state(philo, info, sleeping);
 	pthread_mutex_lock(info->mutex);
+	print_state(philo, info, sleeping);
 	philo->last_sleep = get_current_ms();
-	while (!info->alive && stopwatch_ms(philo->last_sleep) <= info->sleep_time)
-		usleep(500);
+//	while (!info->alive && stopwatch_ms(philo->last_sleep) <= info->sleep_time)
 	pthread_mutex_unlock(info->mutex);
+	while (stopwatch_ms(philo->last_sleep) <= info->sleep_time)
+		usleep(500);
 	print_state(philo, info, thinking);
 }

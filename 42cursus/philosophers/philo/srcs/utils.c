@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:04:34 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/08 20:08:59 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/09 22:12:02 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,37 @@ void	*ft_calloc(size_t count, size_t size)
 	return (mem);
 }
 
-void *exit_free(t_philo *philo)
+// philos, info, tid
+// mutex : left & right fork,  mutex
+void	free_resources(pthread_t *tid, t_philo *philos, t_info *info, int tid_index)
 {
-	t_philo	*ptr;
-	t_info	*info;
+	int	i;
 
-	ptr = philo;
-	info = philo->info;
-	while (ptr)
+	i = 0;
+	while (tid && i < tid_index)
 	{
-		if (ptr->left)
-			free(ptr->left);
-		if (ptr->right)
-			free(ptr->right);
-		ptr++;
+		pthread_join(tid[i], NULL);
+		i++;
 	}
-	free(philo);
-	free(info);
-	return (NULL);
+	i = 0;
+	while (i < info->philo_number)
+	{
+		if (philos[i].left)		// left가 있다면
+			pthread_mutex_destroy(philos[i].left);
+		i++;
+	}
+	if (tid)
+		free(tid);
+	if (info->mutex)
+	{
+		pthread_mutex_destroy(info->mutex);
+		free(info->mutex);
+	}
+	if (info->is_finish)
+		free(info->is_finish);
+	if (info)
+		free(info);
+	if (philos)
+		free(philos);
 }
+

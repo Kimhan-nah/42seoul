@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:56:18 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/08 20:30:56 by hannah           ###   ########.fr       */
+/*   Updated: 2022/05/09 21:43:25 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_info
 	int				alive;		// for die
 	t_bool			*is_finish;
 	int				count_must_eat;
-	pthread_mutex_t	*print;
+//	pthread_mutex_t	*print;
 	pthread_mutex_t	*mutex;
 }	t_info;
 
@@ -65,7 +65,7 @@ typedef struct s_philo
 
 
 t_philo		*parsing(int argc, char **argv);
-void		*exit_free(t_philo *philos);
+void		free_resources(pthread_t *tid, t_philo *philos, t_info *info, int tid_index);
 void		*ft_calloc(size_t count, size_t size);
 int			ft_atoi(const char *s);
 int			generate_philo(t_philo *philos, t_info *info);

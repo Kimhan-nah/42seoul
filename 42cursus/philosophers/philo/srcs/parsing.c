@@ -6,14 +6,19 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:09:34 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/08 22:16:39 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/09 21:47:01 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static t_bool	is_valid(t_info *info)
+static t_bool	is_valid(t_info *info)		// atoi 후 check valid arg
 {
+	if (info->philo_number < 1 || info->die_time < 1 || info->eat_time < 1 ||\
+			info->sleep_time < 1)
+		return (false);
+	if (info->must_eat != -1 && info->must_eat < 1)
+		return (false);
 	return (true);
 }
 
@@ -36,10 +41,12 @@ static int	initialize(t_philo *philos, t_info *info)
 		philos[i].index = i + 1;
 		i++;
 	}
-	if (pthread_mutex_init(info->print, NULL))
+	info->mutex = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
+	if (!info->mutex || pthread_mutex_init(info->mutex, NULL))
+	{
+		free_resources(NULL, philos, info, 0);
 		return (FAILURE);
-	if (pthread_mutex_init(info->mutex, NULL))
-		return (FAILURE);
+	}
 	return (SUCCESS);
 }
 
@@ -59,6 +66,11 @@ t_philo	*parsing(int argc, char **argv)
 	{
 		info->must_eat = ft_atoi(argv[5]);
 		info->is_finish = (t_bool *)ft_calloc(info->philo_number, sizeof(t_bool));
+		if (!info->is_finish)
+		{
+			free_resources(NULL, NULL, info, 0);
+			return (NULL);
+		}
 	}
 	else
 		info->must_eat = -1;
@@ -70,7 +82,10 @@ t_philo	*parsing(int argc, char **argv)
 		free(info);
 		return (NULL);
 	}
-	if (initialize(philos, info))
-		return (exit_free(philos));
+	if (initialize(philos, info))		// FAILURE인 경우
+	{
+		free_resources(NULL, philos, info, 0);
+		return (NULL);
+	}
 	return (philos);
 }

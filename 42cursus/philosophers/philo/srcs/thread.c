@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:29:36 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/09 21:46:45 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/11 17:57:11 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ void	monitoring_thread(t_philo *philos, t_info *info)
 	i = 0;
 	while (stopwatch_ms(philos[i].last_eat) <= info->die_time)
 	{
-		finished = is_finish(philos + i,info);
+		finished = is_finish(philos + i, info);
 		if (finished == true)
+			return ;
+		if (info->alive)
 			return ;
 		i++;
 		if (i == info->philo_number)
@@ -55,34 +57,46 @@ void	monitoring_thread(t_philo *philos, t_info *info)
 	pthread_mutex_lock(info->mutex);
 	if (finished == false)
 	{
-		info->alive = 1; 
-		printf("%s%lld %d died \033[0m\n",\
-				"\033[031m", stopwatch_ms(info->start_time), philos[i].index);
+		info->alive = 1;
+		printf("%s%lld %d died \033[0m\n",
+			"\033[031m", stopwatch_ms(info->start_time), philos[i].index);
 	}
 	pthread_mutex_unlock(info->mutex);
 }
 
 void	*born_philo(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
-	// 스레드가 모두 생성된 경우에만 진행
-	
 	philo = (t_philo *)arg;
 	if (philo->index % 2 == 0)
 		usleep(philo->info->eat_time * 500);
+	if (philo->info->philo_number == 1)
+	{
+		go_eat(philo, philo->info);
+		return (NULL);
+	}
 	while (!philo->info->alive)
 	{
 		go_eat(philo, philo->info);
 		go_sleep(philo, philo->info);
 	}
-	return NULL;
+	return (NULL);
+}
+
+static int	thread_err(pthread_t *tid, t_philo *philos, t_info *info, int i)
+{
+	pthread_mutex_lock(info->mutex);
+	info->alive = 1;
+	pthread_mutex_unlock(info->mutex);
+	free_resources(tid, philos, info, i);
+	return (FAILURE);
 }
 
 int	generate_philo(t_philo *philos, t_info *info)
 {
-	int i;
 	pthread_t	*tid;
+	int			i;
 
 	i = 0;
 	tid = (pthread_t *)ft_calloc(info->philo_number, sizeof(pthread_t));
@@ -98,10 +112,7 @@ int	generate_philo(t_philo *philos, t_info *info)
 		philos[i].last_eat = info->start_time;
 		pthread_mutex_unlock(info->mutex);
 		if (pthread_create(tid + i, NULL, born_philo, philos + i))
-		{
-			free_resources(tid, philos, info, i);
-			return (FAILURE);
-		}
+			return (thread_err(tid, philos, info, i));
 		i++;
 	}
 	monitoring_thread(philos, info);

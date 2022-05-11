@@ -6,18 +6,21 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:09:34 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/09 21:47:01 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/11 17:56:51 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static t_bool	is_valid(t_info *info)		// atoi 후 check valid arg
+static t_bool	is_valid(t_info *info, int argc)
 {
-	if (info->philo_number < 1 || info->die_time < 1 || info->eat_time < 1 ||\
-			info->sleep_time < 1)
+	if (info->philo_number < 1 || info->die_time < 1 || info->eat_time < 1
+		|| info->sleep_time < 1)
+	{
+		free_resources(NULL, NULL, info, 0);
 		return (false);
-	if (info->must_eat != -1 && info->must_eat < 1)
+	}
+	if (argc == 6 && info->must_eat < 1)
 		return (false);
 	return (true);
 }
@@ -50,42 +53,44 @@ static int	initialize(t_philo *philos, t_info *info)
 	return (SUCCESS);
 }
 
-t_philo	*parsing(int argc, char **argv)
+static int	string_to_int(int argc, char **argv, t_info *info)
 {
-	t_philo *philos;
-	t_info	*info;
-
-	info = (t_info *)ft_calloc(1, sizeof(t_info));
-	if (!info)
-		return (NULL);
 	info->philo_number = ft_atoi(argv[1]);
 	info->die_time = ft_atoi(argv[2]);
 	info->eat_time = ft_atoi(argv[3]);
 	info->sleep_time = ft_atoi(argv[4]);
-	if (argc == 6)
+	if (argc == 5)
+		info->must_eat = -1;
+	else if (argc == 6)
 	{
 		info->must_eat = ft_atoi(argv[5]);
-		info->is_finish = (t_bool *)ft_calloc(info->philo_number, sizeof(t_bool));
+		info->is_finish = (t_bool *)ft_calloc(info->philo_number,
+				sizeof(t_bool));
 		if (!info->is_finish)
 		{
-			free_resources(NULL, NULL, info, 0);
-			return (NULL);
+			free(info);
+			return (FAILURE);
 		}
 	}
-	else
-		info->must_eat = -1;
-	if (is_valid(info) == false)
+	return (SUCCESS);
+}
+
+t_philo	*parsing(int argc, char **argv)
+{
+	t_philo	*philos;
+	t_info	*info;
+
+	info = (t_info *)ft_calloc(1, sizeof(t_info));
+	if (!info || string_to_int(argc, argv, info) == FAILURE
+		|| is_valid(info, argc) == false)
 		return (NULL);
 	philos = (t_philo *)ft_calloc(info->philo_number, sizeof(t_philo));
 	if (!philos)
 	{
-		free(info);
+		free_resources(NULL, NULL, info, 0);
 		return (NULL);
 	}
-	if (initialize(philos, info))		// FAILURE인 경우
-	{
-		free_resources(NULL, philos, info, 0);
+	if (initialize(philos, info))
 		return (NULL);
-	}
 	return (philos);
 }

@@ -6,14 +6,14 @@
 #    By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 14:54:52 by hannkim           #+#    #+#              #
-#    Updated: 2022/05/08 22:11:53 by hannkim          ###   ########.fr        #
+#    Updated: 2022/05/11 18:01:41 by hannkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= philo
 CC 			= cc
 ifdef DEBUG
-	CFLAGS	= -g3
+	CFLAGS	= -g3 -fsanitize=address
 else
 	CFLAGS = -Wall -Wextra -Werror
 endif
@@ -23,7 +23,7 @@ RM			= rm -f
 HEADERS 		= ./includes/
 SRCS_DIR		= ./srcs/
 
-SRC				= main.c parsing.c utils.c thread.c action.c error.c
+SRC				= main.c parsing.c utils.c thread.c action.c free.c
 SRCS			= $(addprefix $(SRCS_DIR), $(SRC))
 OBJS 			= $(SRCS:.c=.o)
 

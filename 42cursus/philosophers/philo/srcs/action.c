@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 17:41:56 by hannkim           #+#    #+#             */
-/*   Updated: 2022/05/11 17:40:09 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/05/12 10:03:40 by hannah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ void	go_eat(t_philo *philo, t_info *info)
 	(philo->count_eat)++;
 	pthread_mutex_unlock(info->mutex);
 	pthread_mutex_unlock(philo->left);
-	if (info->philo_number != 1)
-		pthread_mutex_unlock(philo->right);
+	pthread_mutex_unlock(philo->right);
 }
 
 void	go_sleep(t_philo *philo, t_info *info)

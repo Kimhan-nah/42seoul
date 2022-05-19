@@ -338,6 +338,11 @@ char *img5[L5] = {
 "\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x51\x20\x2E\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x5E\x21\x7C\x49\x7C\x51\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x4D\x51\x7C\x2E\x2E\x20\x2E\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x77\x77\x77\x2E\x73\x65\x67\x6E\x61\x6C\x69\x64\x69\x76\x69\x74\x61\x2E\x63\x6F\x6D"
 };
 
+pthread_mutex_t addt;
+pthread_mutex_t rdwr;
+pthread_mutex_t rcnt;
+int read_count = 0;
+
 /*
  * alive 값이 1이면 각 스레드는 무한 루프를 돌며 반복해서 일을 하고,
  * alive 값이 0이 되면 무한 루프를 빠져나와 스레드를 자연스럽게 종료한다.
@@ -362,6 +367,13 @@ void *reader(void *arg)
      * 스레드가 살아 있는 동안 같은 문자열 시퀀스 <XXX...XX>를 반복해서 출력한다.
      */
     while (alive) {
+        pthread_mutex_lock(&addt);
+        pthread_mutex_lock(&rcnt);
+        read_count++;
+        if (read_count == 1)
+            pthread_mutex_lock(&rdwr);
+        pthread_mutex_unlock(&rcnt);
+        pthread_mutex_unlock(&addt);
         /*
          * Begin Critical Section
          */
@@ -372,6 +384,11 @@ void *reader(void *arg)
         /* 
          * End Critical Section
          */
+        pthread_mutex_lock(&rcnt);
+        read_count--;
+        if (read_count == 0)
+            pthread_mutex_unlock(&rdwr);
+        pthread_mutex_unlock(&rcnt);
     }
     pthread_exit(NULL);
 }
@@ -397,6 +414,8 @@ void *writer(void *arg)
      * 스레드가 살아 있는 동안 같은 이미지를 반복해서 출력한다.
      */
     while (alive) {
+        pthread_mutex_lock(&addt);
+        pthread_mutex_lock(&rdwr);
         /*
          * Begin Critical Section
          */
@@ -428,6 +447,8 @@ void *writer(void *arg)
         /* 
          * End Critical Section
          */
+        pthread_mutex_unlock(&rdwr);
+        pthread_mutex_unlock(&addt);
         /*
          * 이미지 출력 후 SLEEPTIME 나노초 안에서 랜덤하게 쉰다.
          */
@@ -450,6 +471,10 @@ int main(void)
     pthread_t rthid[NREAD];
     pthread_t wthid[NWRITE];
     struct timespec req;
+
+    pthread_mutex_init(&addt, NULL);
+    pthread_mutex_init(&rcnt, NULL);
+    pthread_mutex_init(&rdwr, NULL);
 
     /*
      * Create NREAD reader threads

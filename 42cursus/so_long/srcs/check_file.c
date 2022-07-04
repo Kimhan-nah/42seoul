@@ -6,7 +6,7 @@
 /*   By: hannkim <hannkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:01:32 by hannkim           #+#    #+#             */
-/*   Updated: 2022/07/04 17:06:26 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:14:25 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	parsing(char *file, t_solong *solong)
 	}
 	close(fd);
 	if (!(solong->flag)[0] || !(solong->flag)[1] || (solong->flag)[2] != 1)
-		exit_with_message("Invalid solong. 4");
+		exit_with_message("Invalid solong : invalid number of component");
 	if (*line)
 		solong->map[i] = line;
 	else

@@ -6,7 +6,7 @@
 /*   By: hannah <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 16:51:52 by hannah            #+#    #+#             */
-/*   Updated: 2022/07/04 12:04:43 by hannkim          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:15:18 by hannkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	check_mapsize(char *file, t_solong *solong)
 		if (solong->row == 1)
 			solong->col = ft_strlen(line);
 		else if (ft_strlen(line) != solong->col)
-			exit_with_message("Invalid map size. It is not square 1");
+			exit_with_message("Invalid map size. It is not square.");
 		free(line);
 	}
 	close(fd);
@@ -34,7 +34,7 @@ static void	check_mapsize(char *file, t_solong *solong)
 	{
 		solong->row++;
 		if (ft_strlen(line) != solong->col)
-			exit_with_message("Invalid map size. It is not square 2.");
+			exit_with_message("Invalid map size. It is not square.");
 	}
 	if (solong->row < 3 || solong->col < 3 || solong->row * solong->col < 15)
 		exit_with_message("Invalid map size.");

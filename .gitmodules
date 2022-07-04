@@ -1,0 +1,3 @@
+[submodule "42cursus/minishell"]
+	path = 42cursus/minishell
+	url = https://github.com/Chloekkk/minishell

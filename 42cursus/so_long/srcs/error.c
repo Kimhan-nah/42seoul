@@ -14,6 +14,7 @@
 
 void	exit_with_message(char *message)
 {
+	ft_putstr_fd("Error\n", STDERR_FILENO);
 	ft_putendl_fd(message, STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }

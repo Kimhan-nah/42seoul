@@ -42,6 +42,11 @@ typedef struct s_player
 
 }	t_player;
 
+/*
+	flag[0] : 'C'
+	flag[1] : 'E'
+	flag[2] : 'P
+*/
 typedef struct s_solong
 {
 	void			*mlx;

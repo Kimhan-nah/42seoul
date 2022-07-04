@@ -21,7 +21,7 @@ static void	check_components(char *line, t_solong *solong, \
 	component = "01CEP";
 	ptr = ft_strchr(component, *line);
 	if (!ptr)
-		exit_with_message("Invalid solong.");
+		exit_with_message("Invalid component used.");
 	else if (*ptr == 'C')
 		(solong->flag)[0]++;
 	else if (*ptr == 'E')
@@ -40,11 +40,11 @@ static void	check_line(char *line, t_solong *solong, unsigned int i)
 
 	j = 0;
 	if (!line)
-		exit_with_message("check_line");
+		exit_with_message("Invalid check_line.");
 	while (*line)
 	{
 		if ((j == 0 || j + 1 == solong->col) && *line != '1')
-			exit_with_message("Invalid map : wall");
+			exit_with_message("Invalid map wall.");
 		check_components(line, solong, i, j);
 		j++;
 		line++;
@@ -63,7 +63,7 @@ static void	check_wall(char **map, unsigned int row, unsigned int col)
 	while (i < col)
 	{
 		if (top_wall[i] != '1' || bottom_wall[i] != '1')
-			exit_with_message("Invalid map : wall");
+			exit_with_message("Invalid map wall.");
 		i++;
 	}
 }
@@ -74,16 +74,16 @@ void	check_arg(int argc, char *argv[])
 	char	*extension;
 
 	if (argc != 2)
-		exit_with_message("Invalid Argument");
+		exit_with_message("Invalid argument.");
 	ptr = argv[1];
 	extension = ".ber";
 	if (ft_strlen(ptr) < 5)
-		exit_with_message("Invalid file extention");
+		exit_with_message("Invalid file extention.");
 	while (*ptr)
 		ptr++;
 	ptr -= 4;
 	if (ft_strncmp(ptr, extension, 4))
-		exit_with_message("Invalid file extenstion");
+		exit_with_message("Invalid file extenstion.");
 }
 
 void	parsing(char *file, t_solong *solong)
@@ -95,7 +95,7 @@ void	parsing(char *file, t_solong *solong)
 	fd = open(file, O_RDONLY);
 	i = 0;
 	if (fd < 0)
-		exit_with_message("Invalid file descriptor");
+		exit_with_message("Invalid file descriptor.");
 	while (get_next_line(fd, &line) > 0)
 	{
 		check_line(line, solong, i);
@@ -104,7 +104,7 @@ void	parsing(char *file, t_solong *solong)
 	}
 	close(fd);
 	if (!(solong->flag)[0] || !(solong->flag)[1] || (solong->flag)[2] != 1)
-		exit_with_message("Invalid solong : invalid number of component");
+		exit_with_message("Invalid number of component.");
 	if (*line)
 		solong->map[i] = line;
 	else

@@ -4,3 +4,6 @@
 [submodule "cpp-modules"]
 	path = cpp-modules
 	url = https://github.com/Kimhan-nah/cpp-modules
+[submodule "42cursus/cpp-modules"]
+	path = 42cursus/cpp-modules
+	url = https://github.com/Kimhan-nah/cpp-modules

@@ -1,9 +1,9 @@
 [submodule "42cursus/minishell"]
 	path = 42cursus/minishell
 	url = https://github.com/Chloekkk/minishell
-[submodule "cpp-modules"]
-	path = cpp-modules
-	url = https://github.com/Kimhan-nah/cpp-modules
 [submodule "42cursus/cpp-modules"]
 	path = 42cursus/cpp-modules
 	url = https://github.com/Kimhan-nah/cpp-modules
+[submodule "42cursus/cub3D"]
+	path = 42cursus/cub3D
+	url = https://github.com/Chloekkk/cub3D

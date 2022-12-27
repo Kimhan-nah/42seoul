@@ -7,3 +7,6 @@
 [submodule "42cursus/cub3D"]
 	path = 42cursus/cub3D
 	url = https://github.com/Chloekkk/cub3D
+[submodule "42cursus/inception"]
+	path = 42cursus/inception
+	url = https://github.com/Kimhan-nah/inception.git

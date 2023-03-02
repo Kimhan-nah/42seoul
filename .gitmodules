@@ -10,3 +10,6 @@
 [submodule "42cursus/inception"]
 	path = 42cursus/inception
 	url = https://github.com/Kimhan-nah/inception.git
+[submodule "ft_containers"]
+	path = ft_containers
+	url = https://github.com/Kimhan-nah/ft_containers.git

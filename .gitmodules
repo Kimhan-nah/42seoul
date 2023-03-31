@@ -13,3 +13,6 @@
 [submodule "42cursus/ft_containers"]
 	path = 42cursus/ft_containers
 	url = https://github.com/Kimhan-nah/ft_containers.git
+[submodule "42cursus/ft_irc"]
+	path = 42cursus/ft_irc
+	url = https://github.com/nyeoni/eyeRsee.git
